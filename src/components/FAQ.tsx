@@ -1,87 +1,80 @@
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Reveal } from './Reveal';
 
-const ITEMS = [
+const faqs = [
   {
-    q: 'What exactly is Fractional DevOps?',
-    a: 'Senior DevOps expertise on a part-time retainer basis — like having a full team without the full-time cost. You get production-grade support when you need it, without hiring a full-time engineer.',
+    q: 'How is this different from hiring a freelancer on Upwork?',
+    a: 'Freelancers are transactional — they complete a ticket and move on. We embed into your team: we join your Slack, attend standups, write documentation, and care about the long-term health of your infrastructure. Think of us as your DevOps department, not a contractor.',
   },
   {
-    q: 'How quickly can you start?',
-    a: 'Within 2 weeks of our first call, we will have a matched engineer integrated into your workflow.',
+    q: 'What timezone do you operate in?',
+    a: 'We operate primarily in US Eastern and Pacific time zones to maximize overlap with US and EU teams. We also offer async support windows for urgent issues outside core hours.',
   },
   {
-    q: 'What cloud platforms do you support?',
-    a: 'AWS, Azure, and GCP. We are cloud-agnostic and work with whatever your team uses.',
+    q: 'Can I scale up or down month to month?',
+    a: 'Yes. All plans are month-to-month with no long-term contracts. You can upgrade, downgrade, or pause at the end of any billing cycle with 15 days\' notice.',
   },
   {
-    q: 'Do you replace our existing team?',
-    a: 'No, we augment. We work alongside your developers, handle the infra, and transfer knowledge so your team grows stronger.',
+    q: 'Do you work with our existing team or independently?',
+    a: 'Both. We integrate with your engineering team — attending standups, reviewing PRs, and mentoring junior developers on infra best practices. We also work independently on larger infrastructure projects with regular check-ins.',
   },
   {
-    q: 'What if we need to scale up or down?',
-    a: 'Completely flexible. Upgrade, downgrade, or pause anytime with 30 days notice.',
+    q: 'What if we\'re not happy with the work?',
+    a: 'We offer a satisfaction guarantee for the first 30 days. If you\'re not seeing value, we\'ll refund the difference. After that, you can cancel anytime — no questions asked.',
   },
   {
-    q: 'How do you handle security and compliance?',
-    a: 'Security is built into everything we do. We follow DevSecOps practices and can help with SOC2, HIPAA, and ISO 27001 compliance.',
+    q: 'How fast can you start?',
+    a: 'Typically within one week of signing. We start with a discovery call, run an infrastructure audit, and begin embedded work by day 4–5. For urgent needs, we can accelerate to 48 hours.',
   },
 ];
 
-export default function FAQ() {
+export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => e.isIntersecting && e.target.classList.add('active'));
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) {
-      sectionRef.current.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    }
-    return () => observer.disconnect();
-  }, []);
+  const toggle = (i: number) => {
+    setOpenIndex(openIndex === i ? null : i);
+  };
 
   return (
-    <section ref={sectionRef} className="py-20 sm:py-28 bg-[#0F172A]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14 reveal">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Frequently Asked Questions
+    <section id="faq" className="border-t border-border">
+      <div className="mx-auto max-w-3xl px-6 py-24 md:py-32">
+        <Reveal>
+          <p className="text-xs font-mono uppercase tracking-widest text-accent mb-4">
+            FAQ
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display tracking-tight">
+            Common questions, straight answers.
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="space-y-3">
-          {ITEMS.map((item, i) => (
-            <div
-              key={i}
-              className="reveal rounded-xl border border-white/10 bg-white/5 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-white font-medium hover:bg-white/5 transition-colors"
-                aria-expanded={openIndex === i}
-              >
-                {item.q}
-                <ChevronDown
-                  className={`w-5 h-5 flex-shrink-0 text-slate-400 transition-transform ${
-                    openIndex === i ? 'rotate-180' : ''
+        <div className="mt-14 space-y-0">
+          {faqs.map((faq, i) => (
+            <Reveal key={i} delay={i * 50}>
+              <div className="border-b border-border">
+                <button
+                  onClick={() => toggle(i)}
+                  className="w-full flex items-center justify-between py-5 text-left group"
+                >
+                  <span className="text-sm font-medium text-white group-hover:text-accent transition-colors pr-8">
+                    {faq.q}
+                  </span>
+                  <ChevronDown
+                    size={18}
+                    className={`text-muted shrink-0 transition-transform duration-200 ${
+                      openIndex === i ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openIndex === i ? 'max-h-60 pb-5' : 'max-h-0'
                   }`}
-                />
-              </button>
-              <div
-                className={`grid transition-[grid-template-rows] duration-200 ${
-                  openIndex === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <p className="px-5 pb-4 text-slate-400 text-sm leading-relaxed">{item.a}</p>
+                >
+                  <p className="text-sm text-muted leading-relaxed">{faq.a}</p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

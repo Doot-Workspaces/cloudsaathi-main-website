@@ -1,59 +1,51 @@
-import { useEffect, useRef } from 'react';
+import { Reveal } from './Reveal';
 
-const CATEGORIES = [
-  { label: 'Cloud', items: ['AWS', 'Azure', 'GCP'] },
-  { label: 'Containers', items: ['Docker', 'Kubernetes', 'Helm', 'ArgoCD'] },
-  { label: 'IaC', items: ['Terraform', 'Ansible', 'Pulumi', 'CloudFormation'] },
-  { label: 'CI/CD', items: ['GitHub Actions', 'GitLab CI', 'Jenkins', 'CircleCI'] },
-  { label: 'Monitoring', items: ['Prometheus', 'Grafana', 'Datadog', 'ELK Stack'] },
-  { label: 'Security', items: ['Vault', 'Trivy', 'Snyk', 'AWS Security Hub'] },
+const tools = [
+  'AWS',
+  'GCP',
+  'Azure',
+  'Kubernetes',
+  'Terraform',
+  'Pulumi',
+  'Docker',
+  'GitHub Actions',
+  'GitLab CI',
+  'ArgoCD',
+  'Helm',
+  'Prometheus',
+  'Grafana',
+  'Datadog',
+  'Vault',
+  'Nginx',
+  'PostgreSQL',
+  'Redis',
 ];
 
-export default function TechStack() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => e.isIntersecting && e.target.classList.add('active'));
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) {
-      sectionRef.current.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    }
-    return () => observer.disconnect();
-  }, []);
-
+export function TechStack() {
   return (
-    <section ref={sectionRef} className="py-20 sm:py-28 bg-slate-900/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14 reveal">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Technologies We Work With
+    <section className="border-t border-border">
+      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <Reveal>
+          <p className="text-xs font-mono uppercase tracking-widest text-accent mb-4 text-center">
+            Tech Stack
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display tracking-tight text-center">
+            Tools we work with every day.
           </h2>
-        </div>
-        <div className="flex flex-wrap justify-center gap-6">
-          {CATEGORIES.map((cat, i) => (
-            <div key={i} className="reveal">
-              <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur px-6 py-4">
-                <div className="text-xs font-semibold text-teal-400 uppercase tracking-wider mb-3">
-                  {cat.label}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {cat.items.map((name) => (
-                    <span
-                      key={name}
-                      className="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-sm hover:border-teal-500/30 hover:text-teal-400 border border-transparent transition-colors"
-                    >
-                      {name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <div className="mt-14 flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+            {tools.map((tool) => (
+              <span
+                key={tool}
+                className="text-sm font-mono px-4 py-2 rounded-lg bg-card/70 border border-border text-muted hover:text-white hover:border-accent/30 transition-colors"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
