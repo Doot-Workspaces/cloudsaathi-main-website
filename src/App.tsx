@@ -6,6 +6,7 @@ import { Process } from './components/Process';
 import { Pricing } from './components/Pricing';
 import { TechStack } from './components/TechStack';
 import { Trust } from './components/Trust';
+import { Founders } from './components/Founders';
 import { AuditCTA } from './components/AuditCTA';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
@@ -22,6 +23,7 @@ export default function App() {
         <Pricing />
         <TechStack />
         <Trust />
+        <Founders />
         <AuditCTA />
         <FAQ />
       </main>
