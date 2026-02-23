@@ -1,27 +1,31 @@
-import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import SEO from './components/SEO';
-import AIContent from './components/AIContent';
-import Home from './pages/Home';
-import CaseStudies from './pages/CaseStudies';
-import Blog from './pages/Blog';
-import Careers from './pages/Careers';
+import { Navbar } from './components/Navbar';
+import { Hero } from './components/Hero';
+import { PainPoints } from './components/PainPoints';
+import { Services } from './components/Services';
+import { Process } from './components/Process';
+import { Pricing } from './components/Pricing';
+import { TechStack } from './components/TechStack';
+import { Trust } from './components/Trust';
+import { AuditCTA } from './components/AuditCTA';
+import { FAQ } from './components/FAQ';
+import { Footer } from './components/Footer';
 
-function App() {
+export default function App() {
   return (
     <>
-      <SEO />
-      <AIContent />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/careers" element={<Careers />} />
-        </Routes>
-      </Layout>
+      <Navbar />
+      <main>
+        <Hero />
+        <PainPoints />
+        <Services />
+        <Process />
+        <Pricing />
+        <TechStack />
+        <Trust />
+        <AuditCTA />
+        <FAQ />
+      </main>
+      <Footer />
     </>
   );
 }
-
-export default App;

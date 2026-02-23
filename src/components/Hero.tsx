@@ -1,91 +1,80 @@
-import { ArrowRight } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { Reveal } from './Reveal';
 
-export default function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
+const proofPoints = [
+  { value: '40%', label: 'Avg Cloud Cost Saved' },
+  { value: '3x', label: 'Faster Deploy Cycles' },
+  { value: '24hr', label: 'Avg Response Time' },
+  { value: '0', label: 'Long-Term Contracts' },
+];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('active');
-        });
-      },
-      { threshold: 0.1 }
-    );
-    if (heroRef.current) {
-      heroRef.current.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    }
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollTo = (id: string) => {
-    const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
+export function Hero() {
   return (
-    <section
-      id="home"
-      ref={heroRef}
-      className="relative min-h-screen pt-28 pb-20 flex items-center overflow-hidden bg-[#0F172A]"
-    >
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(20, 184, 166, 0.25) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-3xl" />
+    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
+      {/* Background glows */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[160px] translate-x-1/3 -translate-y-1/4" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber/8 rounded-full blur-[140px] -translate-x-1/3 translate-y-1/4" />
+      </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white reveal" itemProp="headline">
-              Your DevOps Team — Without the Full-Time Hire
-            </h1>
-            <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 reveal">
-              Production-grade cloud infrastructure, managed by senior engineers, for a fraction of the cost. Stop burning engineering hours on infrastructure.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start reveal">
-              <a
-                href="https://calendly.com/connect-cloudsaathi/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-400 text-slate-900 font-semibold px-6 py-4 rounded-lg transition-colors"
-              >
-                Book a Free Intro Call
-              </a>
-              <button
-                onClick={() => scrollTo('#how-we-work')}
-                className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-teal-500/50 text-white font-medium px-6 py-4 rounded-lg transition-colors"
-              >
-                See How We Work
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+      <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <Reveal>
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card/50 mb-8">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-pulse-dot absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+            </span>
+            <span className="text-xs font-mono uppercase tracking-wider text-muted">
+              Accepting New Clients — Q1 2026
+            </span>
           </div>
+        </Reveal>
 
-          <div className="reveal flex justify-center lg:justify-end">
-            <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-800/50 backdrop-blur p-6 shadow-2xl">
-              <div className="flex gap-2 mb-4">
-                <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <span className="w-3 h-3 rounded-full bg-green-500/80" />
+        <Reveal delay={100}>
+          <h1 className="max-w-3xl text-4xl md:text-5xl lg:text-6xl font-display leading-[1.1] tracking-tight">
+            Your startup needs{' '}
+            <em className="text-accent not-italic font-display italic">infrastructure</em>
+            , not an infrastructure team.
+          </h1>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <p className="mt-6 max-w-2xl text-lg text-muted leading-relaxed">
+            CloudSaathi embeds senior DevOps engineers into your team on-demand.
+            CI/CD, Kubernetes, Terraform, cloud cost optimization —
+            production-grade infrastructure at a fraction of a full-time hire.
+          </p>
+        </Reveal>
+
+        <Reveal delay={300}>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+              href="#audit"
+              className="inline-flex items-center px-6 py-3 bg-accent text-bg font-medium rounded-lg hover:bg-accent/90 transition-colors text-sm"
+            >
+              Get a Free Infra Audit &rarr;
+            </a>
+            <a
+              href="#pricing"
+              className="inline-flex items-center px-6 py-3 border border-border text-white font-medium rounded-lg hover:bg-card/50 transition-colors text-sm"
+            >
+              See Pricing
+            </a>
+          </div>
+        </Reveal>
+
+        <Reveal delay={400}>
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {proofPoints.map((p) => (
+              <div key={p.label}>
+                <div className="text-2xl md:text-3xl font-display text-white">{p.value}</div>
+                <div className="mt-1 text-xs font-mono uppercase tracking-wider text-muted">
+                  {p.label}
+                </div>
               </div>
-              <pre className="text-sm font-mono text-slate-300 overflow-x-auto">
-                <code>
-                  <span className="text-teal-400">$</span> terraform apply<br />
-                  <span className="text-slate-500"># zero-downtime deploy</span><br />
-                  <span className="text-teal-400">$</span> kubectl rollout status<br />
-                  <span className="text-slate-500"># CI/CD · IaC · K8s</span>
-                </code>
-              </pre>
-            </div>
+            ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
