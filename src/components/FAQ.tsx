@@ -100,10 +100,11 @@ export default function FAQ() {
                   key={index}
                   style={{
                     background: COLORS.bgCard,
-                    border: `1px solid ${COLORS.border}`,
+                    border: `1px solid ${isOpen ? COLORS.borderHover : COLORS.border}`,
                     borderRadius: 10,
                     marginBottom: 12,
                     overflow: 'hidden',
+                    transition: 'border-color 0.3s ease',
                   }}
                 >
                   {/* Question button */}

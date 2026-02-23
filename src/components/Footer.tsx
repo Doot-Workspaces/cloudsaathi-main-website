@@ -27,6 +27,7 @@ const COLUMNS: LinkColumn[] = [
     links: [
       { label: 'How It Works', href: '#process' },
       { label: 'Pricing', href: '#pricing' },
+      { label: 'Founders', href: '#founders' },
       { label: 'FAQ', href: '#faq' },
     ],
   },
