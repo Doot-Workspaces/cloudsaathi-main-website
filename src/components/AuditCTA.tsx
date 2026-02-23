@@ -99,7 +99,7 @@ export default function AuditCTA() {
 
           {/* CTA Button */}
           <a
-            href="https://calendly.com/cloudsaathi/free-audit"
+            href="https://calendly.com/connect-cloudsaathi/30min"
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={() => setBtnHovered(true)}

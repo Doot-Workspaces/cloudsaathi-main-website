@@ -106,6 +106,7 @@ export default function PainPoints() {
                   borderRadius: 14,
                   padding: '32px 28px',
                   transition: 'all 0.3s ease',
+                  transform: hoveredIndex === index ? 'translateY(-3px)' : 'translateY(0)',
                   position: 'relative',
                   overflow: 'hidden',
                 }}
