@@ -34,7 +34,7 @@ export function AuditCTA() {
               </div>
 
               <a
-                href="https://calendly.com/cloudsaathi/free-audit"
+                href="https://calendly.com/connect-cloudsaathi/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-10 inline-flex items-center px-8 py-3.5 bg-accent text-bg font-medium rounded-lg hover:bg-accent/90 transition-colors text-sm"
