@@ -3,36 +3,45 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        display: ['"Instrument Serif"', 'Georgia', 'serif'],
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
-      },
       colors: {
-        bg: '#0a0a0b',
-        card: '#1a1a1f',
-        border: 'rgba(255,255,255,0.08)',
-        accent: '#22d3ee',
-        'accent-dim': 'rgba(34,211,238,0.15)',
-        amber: '#f59e0b',
-        'amber-dim': 'rgba(245,158,11,0.15)',
-        muted: '#a1a1aa',
+        bg: '#06080a',
+        card: '#0c0e12',
+        'card-hover': '#12151b',
+        terminal: '#0a0c10',
+        surface: '#161a22',
+        border: 'rgba(255,255,255,0.05)',
+        'border-hover': 'rgba(255,255,255,0.1)',
+        accent: '#00e5a0',
+        'accent-dim': 'rgba(0,229,160,0.08)',
+        'accent-glow': 'rgba(0,229,160,0.15)',
+        warm: '#ff8a50',
+        'warm-dim': 'rgba(255,138,80,0.1)',
+        blue: '#5eaaff',
+        'blue-dim': 'rgba(94,170,255,0.08)',
+        'text-primary': '#e8eaed',
+        'text-soft': '#8b92a0',
+        'text-muted': '#555d6e',
       },
-      animation: {
-        'reveal': 'reveal 0.7s ease-out forwards',
-        'pulse-dot': 'pulseDot 2s ease-in-out infinite',
+      fontFamily: {
+        display: ['Newsreader', 'Georgia', 'serif'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'Menlo', 'monospace'],
       },
       keyframes: {
-        reveal: {
-          '0%': { opacity: '0', transform: 'translateY(24px)' },
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(28px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         pulseDot: {
-          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
-          '50%': { opacity: '0.4', transform: 'scale(1.5)' },
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
         },
+      },
+      animation: {
+        'fade-up': 'fadeUp 0.7s ease forwards',
+        'pulse-dot': 'pulseDot 2s ease-in-out infinite',
       },
     },
   },
   plugins: [],
-};
+}

@@ -1,79 +1,208 @@
-const footerLinks = {
-  Services: [
-    { label: 'Fractional DevOps', href: '#services' },
-    { label: 'Cloud Cost Optimization', href: '#services' },
-    { label: 'Kubernetes & Platform', href: '#services' },
-    { label: 'IaC Migration & CI/CD', href: '#services' },
-  ],
-  Company: [
-    { label: 'How It Works', href: '#process' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'FAQ', href: '#faq' },
-  ],
-  Connect: [
-    { label: 'Free Infra Audit', href: '#audit' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/company/cloudsaathi' },
-    { label: 'Email Us', href: 'mailto:connect@cloudsaathi.com' },
-  ],
-};
+import { useState } from 'react'
+import { COLORS } from '../constants'
 
-export function Footer() {
+interface FooterLink {
+  label: string
+  href: string
+  external?: boolean
+}
+
+interface LinkColumn {
+  header: string
+  links: FooterLink[]
+}
+
+const COLUMNS: LinkColumn[] = [
+  {
+    header: 'Services',
+    links: [
+      { label: 'Fractional DevOps', href: '#services' },
+      { label: 'Cost Optimization', href: '#services' },
+      { label: 'Kubernetes', href: '#services' },
+      { label: 'IaC & CI/CD', href: '#services' },
+    ],
+  },
+  {
+    header: 'Company',
+    links: [
+      { label: 'How It Works', href: '#process' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'FAQ', href: '#faq' },
+    ],
+  },
+  {
+    header: 'Connect',
+    links: [
+      { label: 'hello@cloudsaathi.com', href: 'mailto:hello@cloudsaathi.com' },
+      {
+        label: 'Calendly',
+        href: 'https://calendly.com/cloudsaathi/free-audit',
+        external: true,
+      },
+      {
+        label: 'LinkedIn',
+        href: 'https://linkedin.com/company/cloudsaathi',
+        external: true,
+      },
+    ],
+  },
+]
+
+const BOTTOM_LINKS = [
+  { label: 'Privacy', href: '#' },
+  { label: 'Terms', href: '#' },
+]
+
+export default function Footer() {
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [hoveredBottom, setHoveredBottom] = useState<string | null>(null)
+
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <a href="#" className="text-lg font-semibold tracking-tight">
-              <span className="text-white">cloud</span>
-              <span className="text-accent">saathi</span>
-            </a>
-            <p className="mt-3 text-sm text-muted leading-relaxed max-w-xs">
-              Fractional DevOps for startups that need production-grade infrastructure
-              without the full-time hire.
+    <footer
+      style={{
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: '64px 0 32px',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1180,
+          margin: '0 auto',
+          padding: '0 24px',
+        }}
+      >
+        {/* Top row */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 48,
+            marginBottom: 48,
+          }}
+        >
+          {/* Left: Logo + tagline */}
+          <div>
+            <div
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontWeight: 700,
+                fontSize: '1.1rem',
+              }}
+            >
+              <span style={{ color: '#ffffff' }}>cloud</span>
+              <span style={{ color: COLORS.accent }}>saathi</span>
+            </div>
+            <p
+              style={{
+                fontSize: '0.85rem',
+                color: COLORS.textMuted,
+                marginTop: 8,
+              }}
+            >
+              Fractional DevOps for startups that ship.
             </p>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="text-xs font-mono uppercase tracking-widest text-muted mb-4">
-                {title}
-              </h4>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.label}>
+          {/* Right: Link columns */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 64,
+              flexWrap: 'wrap',
+            }}
+          >
+            {COLUMNS.map((column) => (
+              <div key={column.header}>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    color: COLORS.textMuted,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.12em',
+                    marginBottom: 16,
+                  }}
+                >
+                  {column.header}
+                </p>
+                {column.links.map((link) => {
+                  const linkKey = `${column.header}-${link.label}`
+                  return (
                     <a
+                      key={link.label}
                       href={link.href}
-                      className="text-sm text-muted hover:text-white transition-colors"
-                      {...(link.href.startsWith('http') || link.href.startsWith('mailto')
-                        ? { target: '_blank', rel: 'noopener noreferrer' }
-                        : {})}
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noopener noreferrer' : undefined}
+                      onMouseEnter={() => setHoveredLink(linkKey)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                      style={{
+                        display: 'block',
+                        fontSize: '0.85rem',
+                        color:
+                          hoveredLink === linkKey ? '#ffffff' : COLORS.textSoft,
+                        textDecoration: 'none',
+                        lineHeight: 2,
+                        transition: 'color 0.2s ease',
+                      }}
                     >
                       {link.label}
                     </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                  )
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Copyright bar */}
-        <div className="mt-16 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted">
-            &copy; {new Date().getFullYear()} CloudSaathi. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="/privacy-policy.html" className="text-xs text-muted hover:text-white transition-colors">
-              Privacy
-            </a>
-            <a href="/terms-of-service.html" className="text-xs text-muted hover:text-white transition-colors">
-              Terms
-            </a>
+        {/* Bottom row */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingTop: 32,
+            borderTop: `1px solid ${COLORS.border}`,
+          }}
+        >
+          <span
+            style={{
+              fontSize: '0.8rem',
+              color: COLORS.textMuted,
+            }}
+          >
+            &copy; 2026 CloudSaathi
+          </span>
+
+          <div
+            style={{
+              display: 'flex',
+              gap: 24,
+            }}
+          >
+            {BOTTOM_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onMouseEnter={() => setHoveredBottom(link.label)}
+                onMouseLeave={() => setHoveredBottom(null)}
+                style={{
+                  fontSize: '0.8rem',
+                  color:
+                    hoveredBottom === link.label
+                      ? '#ffffff'
+                      : COLORS.textSoft,
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }
