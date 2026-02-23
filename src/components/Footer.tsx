@@ -33,7 +33,7 @@ const COLUMNS: LinkColumn[] = [
   {
     header: 'Connect',
     links: [
-      { label: 'hello@cloudsaathi.com', href: 'mailto:hello@cloudsaathi.com' },
+      { label: 'connect@cloudsaathi.com', href: 'mailto:connect@cloudsaathi.com' },
       {
         label: 'Calendly',
         href: 'https://calendly.com/connect-cloudsaathi/30min',
