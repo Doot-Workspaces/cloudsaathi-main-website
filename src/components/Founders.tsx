@@ -1,31 +1,174 @@
-import { useState } from 'react'
-import { COLORS } from '../constants'
-import Reveal from './Reveal'
+import { useState } from 'react';
+import { COLORS } from '../constants';
+import Reveal from './Reveal';
 
 const founders = [
   {
     name: 'Ankit Jangir',
-    role: 'Co-founder',
-    linkedin: 'https://www.linkedin.com/in/ankit-jangir-devops/',
+    role: 'Co-founder & DevOps Architect',
     initials: 'AJ',
+    linkedin: 'https://www.linkedin.com/in/ankit-jangir-devops/',
+    bio: '8+ years building and scaling cloud infrastructure. Previously led DevOps at high-growth startups. Specializes in Kubernetes, Terraform, and cloud cost optimization.',
+    specialties: ['Kubernetes', 'Terraform', 'AWS', 'Cost Optimization'],
   },
   {
     name: 'Nihaan Mohammed',
-    role: 'Co-founder',
-    linkedin: 'https://www.linkedin.com/in/nihaan-mohammed/',
+    role: 'Co-founder & Platform Engineer',
     initials: 'NM',
+    linkedin: 'https://www.linkedin.com/in/nihaan-mohammed/',
+    bio: '7+ years in platform engineering and CI/CD automation. Built developer platforms serving hundreds of engineers. Passionate about making infrastructure invisible.',
+    specialties: ['CI/CD', 'Platform Eng', 'GCP', 'GitOps'],
   },
-]
+];
+
+function FounderCard({
+  founder,
+  delay,
+}: {
+  founder: (typeof founders)[number];
+  delay: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <Reveal delay={delay}>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: COLORS.bgCard,
+          border: `1px solid ${hovered ? COLORS.borderHover : COLORS.border}`,
+          borderRadius: 14,
+          padding: '36px 32px',
+          transition: 'border 0.3s ease, background 0.3s ease',
+          ...(hovered ? { background: COLORS.bgCardHover } : {}),
+        }}
+      >
+        {/* Avatar */}
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: '50%',
+            background: COLORS.accentDim,
+            border: `2px solid ${COLORS.accent}`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '1rem',
+            fontWeight: 700,
+            color: COLORS.accent,
+            marginBottom: 18,
+          }}
+        >
+          {founder.initials}
+        </div>
+
+        {/* Name */}
+        <div
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '1.15rem',
+            fontWeight: 600,
+            color: COLORS.text,
+            marginBottom: 4,
+          }}
+        >
+          {founder.name}
+        </div>
+
+        {/* Role */}
+        <div
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '0.8rem',
+            color: COLORS.textMuted,
+            marginBottom: 0,
+          }}
+        >
+          {founder.role}
+        </div>
+
+        {/* Bio */}
+        <p
+          style={{
+            fontSize: '0.88rem',
+            color: COLORS.textSoft,
+            lineHeight: 1.7,
+            marginTop: 16,
+            marginBottom: 20,
+          }}
+        >
+          {founder.bio}
+        </p>
+
+        {/* Specialty badges */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 8,
+            marginBottom: 20,
+          }}
+        >
+          {founder.specialties.map((s) => (
+            <span
+              key={s}
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.65rem',
+                background: COLORS.bgCardHover,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: 5,
+                padding: '4px 10px',
+                color: COLORS.textMuted,
+              }}
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+
+        {/* LinkedIn link */}
+        <a
+          href={founder.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: '0.7rem',
+            color: COLORS.accent,
+            textDecoration: 'none',
+          }}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </Reveal>
+  );
+}
 
 export default function Founders() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-
   return (
     <section
       id="founders"
       style={{
-        padding: '100px 24px',
         borderTop: `1px solid ${COLORS.border}`,
+        padding: '100px 24px',
+        background: COLORS.bg,
       }}
     >
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
@@ -33,36 +176,40 @@ export default function Founders() {
           <p
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: '0.65rem',
+              fontSize: '0.75rem',
               textTransform: 'uppercase',
               letterSpacing: '0.12em',
               color: COLORS.accent,
-              marginBottom: 16,
-              fontWeight: 600,
+              marginBottom: 12,
             }}
           >
             Who We Are
           </p>
+        </Reveal>
+
+        <Reveal delay={0.1}>
           <h2
             style={{
-              fontFamily: "'Newsreader', serif",
-              fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)',
-              fontWeight: 400,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
+              fontWeight: 700,
               color: COLORS.text,
-              lineHeight: 1.2,
-              margin: 0,
+              lineHeight: 1.25,
+              marginBottom: 16,
             }}
           >
             Built by engineers who've been in your shoes.
           </h2>
+        </Reveal>
+
+        <Reveal delay={0.15}>
           <p
             style={{
-              fontSize: '1.05rem',
+              fontSize: '1rem',
               color: COLORS.textSoft,
-              maxWidth: 560,
               lineHeight: 1.7,
-              marginTop: 18,
-              marginBottom: 0,
+              maxWidth: 640,
+              marginBottom: 48,
             }}
           >
             We've scaled infrastructure at startups and enterprises alike.
@@ -74,114 +221,20 @@ export default function Founders() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: 20,
-            marginTop: 48,
-            maxWidth: 640,
+            maxWidth: 780,
           }}
         >
-          {founders.map((f, i) => (
-            <Reveal key={f.name} delay={i * 120}>
-              <div
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                style={{
-                  background: COLORS.bgCard,
-                  border: `1px solid ${hoveredIndex === i ? COLORS.borderHover : COLORS.border}`,
-                  borderRadius: 14,
-                  padding: '28px 24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 18,
-                  transition: 'border-color 0.3s ease',
-                }}
-              >
-                {/* Initials avatar */}
-                <div
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: '50%',
-                    background: COLORS.accentDim,
-                    border: `1px solid rgba(0,229,160,0.18)`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.85rem',
-                      fontWeight: 700,
-                      color: COLORS.accent,
-                    }}
-                  >
-                    {f.initials}
-                  </span>
-                </div>
-
-                <div>
-                  <h3
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: '1.05rem',
-                      fontWeight: 600,
-                      color: COLORS.text,
-                      margin: 0,
-                    }}
-                  >
-                    {f.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: '0.8rem',
-                      color: COLORS.textMuted,
-                      margin: '4px 0 0',
-                    }}
-                  >
-                    {f.role}
-                  </p>
-                  <a
-                    href={f.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 6,
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.7rem',
-                      color: COLORS.accent,
-                      textDecoration: 'none',
-                      marginTop: 10,
-                      transition: 'opacity 0.3s ease',
-                    }}
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                      <rect x="2" y="9" width="4" height="12" />
-                      <circle cx="4" cy="4" r="2" />
-                    </svg>
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </Reveal>
+          {founders.map((founder, i) => (
+            <FounderCard
+              key={founder.initials}
+              founder={founder}
+              delay={0.2 + i * 0.12}
+            />
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

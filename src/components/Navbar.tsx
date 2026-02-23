@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { COLORS } from '../constants'
 
 const NAV_LINKS = [
@@ -8,13 +8,19 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '#faq' },
 ]
 
+const SECTION_IDS = ['services', 'process', 'pricing', 'faq']
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
   const [ctaHovered, setCtaHovered] = useState(false)
   const [mobileCtaHovered, setMobileCtaHovered] = useState(false)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [logoHovered, setLogoHovered] = useState(false)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
+  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40)
@@ -23,8 +29,58 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // IntersectionObserver for active section highlighting
+  useEffect(() => {
+    const sectionElements: Element[] = []
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        // Find the entry that is most visible
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+        if (visibleEntries.length > 0) {
+          // Pick the one with the highest intersection ratio
+          const mostVisible = visibleEntries.reduce((prev, curr) =>
+            curr.intersectionRatio > prev.intersectionRatio ? curr : prev
+          )
+          setActiveSection(mostVisible.target.id)
+        }
+      },
+      {
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+      }
+    )
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) {
+        observerRef.current!.observe(el)
+        sectionElements.push(el)
+      }
+    })
+
+    return () => {
+      if (observerRef.current) {
+        sectionElements.forEach((el) => observerRef.current!.unobserve(el))
+        observerRef.current.disconnect()
+      }
+    }
+  }, [])
+
   const handleMobileLinkClick = () => {
     setMobileOpen(false)
+  }
+
+  const isLinkActive = (href: string) => {
+    const sectionId = href.replace('#', '')
+    return activeSection === sectionId
+  }
+
+  const getLinkColor = (link: { href: string }, isMobile = false) => {
+    const prefix = isMobile ? `mobile-${link.href}` : link.href
+    if (isLinkActive(link.href)) return '#ffffff'
+    if (hoveredLink === prefix) return '#ffffff'
+    return COLORS.textSoft
   }
 
   return (
@@ -56,12 +112,17 @@ export default function Navbar() {
         {/* Logo */}
         <a
           href="#"
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
           style={{
             textDecoration: 'none',
             fontFamily: "'IBM Plex Mono', monospace",
             fontWeight: 700,
             fontSize: '1.3rem',
             letterSpacing: '-0.02em',
+            display: 'inline-block',
+            transform: logoHovered ? 'scale(1.06)' : 'scale(1)',
+            transition: 'transform 0.3s ease',
           }}
         >
           <span style={{ color: '#ffffff' }}>cloud</span>
@@ -87,15 +148,33 @@ export default function Navbar() {
                 textDecoration: 'none',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.85rem',
-                color: hoveredLink === link.href ? '#ffffff' : COLORS.textSoft,
+                color: getLinkColor(link),
                 transition: 'all 0.3s ease',
+                position: 'relative',
+                paddingBottom: 4,
               }}
             >
               {link.label}
+              {/* Active indicator dot/underline */}
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: -2,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: isLinkActive(link.href) ? 18 : 0,
+                  height: 2,
+                  borderRadius: 1,
+                  background: COLORS.accent,
+                  transition: 'width 0.3s ease',
+                  opacity: isLinkActive(link.href) ? 1 : 0,
+                }}
+              />
             </a>
           ))}
           <a
             href="#audit"
+            className="navbar-cta-btn"
             onMouseEnter={() => setCtaHovered(true)}
             onMouseLeave={() => setCtaHovered(false)}
             style={{
@@ -201,11 +280,27 @@ export default function Navbar() {
                 textDecoration: 'none',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.95rem',
-                color: hoveredLink === `mobile-${link.href}` ? '#ffffff' : COLORS.textSoft,
+                color: getLinkColor(link, true),
                 padding: '10px 0',
                 transition: 'all 0.3s ease',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
               }}
             >
+              {/* Active dot for mobile */}
+              {isLinkActive(link.href) && (
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: COLORS.accent,
+                    flexShrink: 0,
+                  }}
+                />
+              )}
               {link.label}
             </a>
           ))}
@@ -234,7 +329,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Responsive Styles */}
+      {/* Responsive Styles + CTA Pulse Animation */}
       <style>{`
         .nav-desktop {
           display: flex !important;
@@ -255,6 +350,25 @@ export default function Navbar() {
           .nav-mobile-menu {
             display: block !important;
           }
+        }
+
+        @keyframes ctaPulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(0, 229, 160, 0.35);
+          }
+          50% {
+            box-shadow: 0 0 12px 4px rgba(0, 229, 160, 0.15);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(0, 229, 160, 0);
+          }
+        }
+
+        .navbar-cta-btn {
+          animation: ctaPulse 2s ease-in-out 0.5s 3;
+        }
+        .navbar-cta-btn:hover {
+          animation: none;
         }
       `}</style>
     </nav>
