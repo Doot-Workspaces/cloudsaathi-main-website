@@ -1,130 +1,308 @@
-import { Check } from 'lucide-react';
-import { Reveal } from './Reveal';
+import { useState } from 'react'
+import { COLORS } from '../constants'
+import Reveal from './Reveal'
 
 interface Tier {
-  tag: string;
-  name: string;
-  price: string;
-  hours: string;
-  features: string[];
-  featured?: boolean;
+  label: string
+  name: string
+  price: string
+  features: string[]
+  featured?: boolean
 }
 
 const tiers: Tier[] = [
   {
-    tag: 'Starter',
+    label: 'STARTER',
     name: 'Launch',
     price: '$2,000',
-    hours: '~10 hrs/mo',
     features: [
+      '~10 hrs/month of DevOps work',
       'CI/CD pipeline setup & maintenance',
       'Basic monitoring & alerting',
-      'Slack-based communication',
+      'Shared Slack channel',
       'Monthly infrastructure review',
     ],
   },
   {
-    tag: 'Growth',
+    label: 'GROWTH',
     name: 'Scale',
     price: '$4,000',
-    hours: '~25 hrs/mo',
     featured: true,
     features: [
-      'Full Infrastructure as Code',
-      'Kubernetes management',
+      '~25 hrs/month of DevOps work',
+      'Full IaC management (Terraform/Pulumi)',
+      'Kubernetes cluster management',
       'Cloud cost optimization',
-      'Weekly sync calls',
+      'Weekly sync + Slack support',
       '4-hour incident response SLA',
     ],
   },
   {
-    tag: 'Enterprise',
+    label: 'ENTERPRISE',
     name: 'Dominate',
     price: '$6,500',
-    hours: '~40 hrs/mo',
     features: [
-      'Everything in Scale',
-      'SOC2 / HIPAA compliance support',
+      '~40 hrs/month of DevOps work',
+      'Everything in Scale, plus:',
+      'SOC 2 / HIPAA compliance setup',
       '24/7 on-call coverage',
-      'Architecture reviews',
-      'Dedicated engineer',
+      'Architecture reviews & roadmap',
+      'Dedicated senior engineer',
       '2-hour incident response SLA',
     ],
   },
-];
+]
 
-export function Pricing() {
+export default function Pricing() {
+  const [hoveredBtn, setHoveredBtn] = useState<number | null>(null)
+
   return (
-    <section id="pricing" className="border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <section
+      id="pricing"
+      style={{
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: '120px 0',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1180,
+          margin: '0 auto',
+          padding: '0 24px',
+        }}
+      >
         <Reveal>
-          <p className="text-xs font-mono uppercase tracking-widest text-accent mb-4">
+          <p
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.75rem',
+              color: COLORS.accent,
+              textTransform: 'uppercase',
+              letterSpacing: '0.14em',
+              marginBottom: 16,
+            }}
+          >
             Transparent Pricing
           </p>
-          <h2 className="text-3xl md:text-4xl font-display tracking-tight">
-            Pay for what you need. Scale when you're ready.
+        </Reveal>
+
+        <Reveal delay={80}>
+          <h2
+            style={{
+              fontFamily: "'Newsreader', serif",
+              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+              fontWeight: 400,
+              color: COLORS.text,
+              marginBottom: 16,
+            }}
+          >
+            Pay for what you need.
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid md:grid-cols-3 gap-4">
+        <Reveal delay={160}>
+          <p
+            style={{
+              fontSize: '1.05rem',
+              color: COLORS.textSoft,
+              maxWidth: 520,
+              marginBottom: 56,
+              lineHeight: 1.6,
+            }}
+          >
+            No retainer lock-ins. No hidden fees. Month-to-month. Pause or cancel anytime.
+          </p>
+        </Reveal>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 20,
+          }}
+        >
           {tiers.map((tier, i) => (
-            <Reveal key={tier.tag} delay={i * 100}>
+            <Reveal key={tier.label} delay={200 + i * 120}>
               <div
-                className={`relative rounded-xl border p-6 md:p-8 h-full flex flex-col ${
-                  tier.featured
-                    ? 'border-accent bg-accent/5'
-                    : 'border-border bg-card/50'
-                }`}
+                style={{
+                  position: 'relative',
+                  background: tier.featured
+                    ? `linear-gradient(180deg, ${COLORS.accentDim} 0%, ${COLORS.bgCard} 40%)`
+                    : COLORS.bgCard,
+                  border: `1px solid ${tier.featured ? COLORS.accent : COLORS.border}`,
+                  borderRadius: 14,
+                  padding: '40px 32px',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
                 {tier.featured && (
-                  <span className="absolute -top-3 left-6 text-[10px] font-mono uppercase tracking-widest bg-accent text-bg px-3 py-1 rounded-full">
-                    Most Popular
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -11,
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: COLORS.accent,
+                      color: '#06080a',
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.6rem',
+                      fontWeight: 800,
+                      padding: '4px 14px',
+                      borderRadius: 100,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    MOST POPULAR
                   </span>
                 )}
-                <span className="text-[10px] font-mono uppercase tracking-widest text-accent/70">
-                  {tier.tag}
-                </span>
-                <h3 className="mt-2 text-2xl font-display text-white">{tier.name}</h3>
-                <div className="mt-4">
-                  <span className="text-3xl font-display text-white">{tier.price}</span>
-                  <span className="text-sm text-muted">/mo</span>
-                </div>
-                <p className="mt-1 text-xs font-mono text-muted">{tier.hours}</p>
 
-                <ul className="mt-6 space-y-3 flex-1">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-muted">
-                      <Check size={16} className="text-accent shrink-0 mt-0.5" />
-                      {f}
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    color: COLORS.textMuted,
+                    letterSpacing: '0.12em',
+                    marginBottom: 8,
+                  }}
+                >
+                  {tier.label}
+                </p>
+
+                <h3
+                  style={{
+                    fontFamily: "'Newsreader', serif",
+                    fontSize: '1.6rem',
+                    fontWeight: 400,
+                    color: COLORS.text,
+                    marginBottom: 20,
+                  }}
+                >
+                  {tier.name}
+                </h3>
+
+                <div style={{ marginBottom: 0 }}>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '2.2rem',
+                      fontWeight: 700,
+                      color: COLORS.text,
+                    }}
+                  >
+                    {tier.price}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.85rem',
+                      color: COLORS.textMuted,
+                    }}
+                  >
+                    /mo
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    borderTop: `1px solid ${COLORS.border}`,
+                    margin: '24px 0',
+                  }}
+                />
+
+                <ul
+                  style={{
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0,
+                    flex: 1,
+                  }}
+                >
+                  {tier.features.map((feature) => (
+                    <li
+                      key={feature}
+                      style={{
+                        fontSize: '0.9rem',
+                        color: COLORS.textSoft,
+                        lineHeight: 2,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: "'IBM Plex Mono', monospace",
+                          color: COLORS.accent,
+                          marginRight: 8,
+                        }}
+                      >
+                        &rarr;
+                      </span>
+                      {feature}
                     </li>
                   ))}
                 </ul>
 
                 <a
                   href="#audit"
-                  className={`mt-8 block text-center text-sm font-medium px-4 py-3 rounded-lg transition-colors ${
-                    tier.featured
-                      ? 'bg-accent text-bg hover:bg-accent/90'
-                      : 'border border-border text-white hover:bg-card'
-                  }`}
+                  onMouseEnter={() => setHoveredBtn(i)}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    fontWeight: tier.featured ? 700 : 600,
+                    fontSize: '0.95rem',
+                    padding: '14px 0',
+                    width: '100%',
+                    borderRadius: 10,
+                    marginTop: 32,
+                    cursor: 'pointer',
+                    transition: 'all 0.25s ease',
+                    ...(tier.featured
+                      ? {
+                          background: COLORS.accent,
+                          color: '#06080a',
+                          border: 'none',
+                          boxShadow:
+                            hoveredBtn === i
+                              ? '0 0 30px rgba(0,229,160,0.25)'
+                              : 'none',
+                        }
+                      : {
+                          background: 'transparent',
+                          border: `1px solid ${
+                            hoveredBtn === i ? COLORS.accent : COLORS.borderHover
+                          }`,
+                          color:
+                            hoveredBtn === i ? COLORS.accent : COLORS.textSoft,
+                        }),
+                  }}
                 >
-                  Get Started &rarr;
+                  Start with Free Audit
                 </a>
               </div>
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={400}>
-          <p className="mt-10 text-center text-sm text-muted max-w-2xl mx-auto">
-            All plans are month-to-month. Need a custom scope?{' '}
-            <a href="#audit" className="text-accent hover:underline">
-              Let&apos;s talk.
-            </a>{' '}
-            We also offer fixed-price projects starting at $3,000.
+        <Reveal delay={560}>
+          <p
+            style={{
+              textAlign: 'center',
+              color: COLORS.textMuted,
+              fontSize: '0.9rem',
+              marginTop: 48,
+              fontFamily: "'IBM Plex Mono', monospace",
+            }}
+          >
+            All plans month-to-month. Custom scope? Let&rsquo;s talk. Fixed-price projects from $3,000.
           </p>
         </Reveal>
       </div>
     </section>
-  );
+  )
 }

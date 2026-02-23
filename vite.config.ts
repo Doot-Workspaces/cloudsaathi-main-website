@@ -1,25 +1,23 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ isSsrBuild }) => ({
+export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'lucide-vendor': ['lucide-react'],
+        },
+      },
+    },
+  },
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  build: {
-    outDir: isSsrBuild ? 'dist/server' : 'dist',
-    assetsDir: 'assets',
-    sourcemap: false,
-    minify: isSsrBuild ? false : 'esbuild',
-    rollupOptions: isSsrBuild
-      ? undefined
-      : {
-          output: {
-            manualChunks: {
-              'react-vendor': ['react', 'react-dom'],
-              'lucide-vendor': ['lucide-react'],
-            },
-          },
-        },
-  },
-}));
+})

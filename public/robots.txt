@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://cloudsaathi.com/sitemap.xml

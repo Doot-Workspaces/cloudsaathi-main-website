@@ -1,83 +1,172 @@
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { Reveal } from './Reveal';
+import { useState } from 'react'
+import { COLORS } from '../constants'
+import Reveal from './Reveal'
 
-const faqs = [
+const FAQ_ITEMS = [
   {
-    q: 'How is this different from hiring a freelancer on Upwork?',
-    a: 'Freelancers are transactional — they complete a ticket and move on. We embed into your team: we join your Slack, attend standups, write documentation, and care about the long-term health of your infrastructure. Think of us as your DevOps department, not a contractor.',
+    question: 'How is this different from an Upwork freelancer?',
+    answer:
+      'Freelancers are task-executors. We\u2019re a structured DevOps practice: discovery, audit, roadmap, execution, ongoing support. You get process, documentation, and knowledge transfer \u2014 not just someone running commands.',
   },
   {
-    q: 'What timezone do you operate in?',
-    a: 'We operate primarily in US Eastern and Pacific time zones to maximize overlap with US and EU teams. We also offer async support windows for urgent issues outside core hours.',
+    question: 'What timezone do you operate in?',
+    answer:
+      'We\u2019re based in IST with a 4\u20136 hour overlap with US business hours. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained while you sleep.',
   },
   {
-    q: 'Can I scale up or down month to month?',
-    a: 'Yes. All plans are month-to-month with no long-term contracts. You can upgrade, downgrade, or pause at the end of any billing cycle with 15 days\' notice.',
+    question: 'Can I scale up or down?',
+    answer:
+      'Absolutely. All plans are month-to-month. Scale up before a launch, scale down during quiet periods. Zero lock-in, zero penalties.',
   },
   {
-    q: 'Do you work with our existing team or independently?',
-    a: 'Both. We integrate with your engineering team — attending standups, reviewing PRs, and mentoring junior developers on infra best practices. We also work independently on larger infrastructure projects with regular check-ins.',
+    question: 'Do you embed with our team?',
+    answer:
+      'Yes. We join your Slack, attend standups, use your Git workflow, and document everything in your systems. When the engagement ends, you own everything we built.',
   },
   {
-    q: 'What if we\'re not happy with the work?',
-    a: 'We offer a satisfaction guarantee for the first 30 days. If you\'re not seeing value, we\'ll refund the difference. After that, you can cancel anytime — no questions asked.',
+    question: 'What if we\u2019re not happy?',
+    answer:
+      'We offer a 2-week trial at the start of every engagement. If you\u2019re not satisfied with the quality of work, you pay nothing for those two weeks.',
   },
   {
-    q: 'How fast can you start?',
-    a: 'Typically within one week of signing. We start with a discovery call, run an infrastructure audit, and begin embedded work by day 4–5. For urgent needs, we can accelerate to 48 hours.',
+    question: 'How fast can you start?',
+    answer:
+      'Typical onboarding is 3\u20135 business days. For urgent production issues, we can start within 48 hours.',
   },
-];
+]
 
-export function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? null : i);
-  };
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
 
   return (
-    <section id="faq" className="border-t border-border">
-      <div className="mx-auto max-w-3xl px-6 py-24 md:py-32">
+    <section
+      id="faq"
+      style={{
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: '120px 0',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1180,
+          margin: '0 auto',
+          padding: '0 24px',
+        }}
+      >
         <Reveal>
-          <p className="text-xs font-mono uppercase tracking-widest text-accent mb-4">
+          {/* Label */}
+          <p
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.75rem',
+              color: COLORS.accent,
+              textTransform: 'uppercase',
+              letterSpacing: '0.14em',
+              marginBottom: 16,
+            }}
+          >
             FAQ
           </p>
-          <h2 className="text-3xl md:text-4xl font-display tracking-tight">
-            Common questions, straight answers.
-          </h2>
-        </Reveal>
 
-        <div className="mt-14 space-y-0">
-          {faqs.map((faq, i) => (
-            <Reveal key={i} delay={i * 50}>
-              <div className="border-b border-border">
-                <button
-                  onClick={() => toggle(i)}
-                  className="w-full flex items-center justify-between py-5 text-left group"
-                >
-                  <span className="text-sm font-medium text-white group-hover:text-accent transition-colors pr-8">
-                    {faq.q}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`text-muted shrink-0 transition-transform duration-200 ${
-                      openIndex === i ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
+          {/* Title */}
+          <h2
+            style={{
+              fontFamily: "'Newsreader', serif",
+              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+              fontWeight: 400,
+              color: COLORS.text,
+              marginBottom: 56,
+            }}
+          >
+            Questions we get every week.
+          </h2>
+
+          {/* Accordion */}
+          <div
+            style={{
+              maxWidth: 700,
+              margin: '0 auto',
+            }}
+          >
+            {FAQ_ITEMS.map((item, index) => {
+              const isOpen = openIndex === index
+
+              return (
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === i ? 'max-h-60 pb-5' : 'max-h-0'
-                  }`}
+                  key={index}
+                  style={{
+                    background: COLORS.bgCard,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 10,
+                    marginBottom: 12,
+                    overflow: 'hidden',
+                  }}
                 >
-                  <p className="text-sm text-muted leading-relaxed">{faq.a}</p>
+                  {/* Question button */}
+                  <button
+                    onClick={() => handleToggle(index)}
+                    style={{
+                      width: '100%',
+                      padding: '22px 24px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      background: 'transparent',
+                      border: 'none',
+                      color: COLORS.text,
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      fontFamily: "'DM Sans', sans-serif",
+                    }}
+                  >
+                    {item.question}
+                    <span
+                      style={{
+                        fontFamily: "'IBM Plex Mono', monospace",
+                        color: COLORS.accent,
+                        fontSize: '1.2rem',
+                        transition: 'transform 0.35s ease',
+                        transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                        flexShrink: 0,
+                        marginLeft: 16,
+                      }}
+                    >
+                      +
+                    </span>
+                  </button>
+
+                  {/* Answer */}
+                  <div
+                    style={{
+                      overflow: 'hidden',
+                      maxHeight: isOpen ? 300 : 0,
+                      transition: 'max-height 0.35s ease',
+                      padding: `0 24px`,
+                      paddingBottom: isOpen ? 22 : 0,
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: '0.9rem',
+                        color: COLORS.textSoft,
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {item.answer}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              )
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
-  );
+  )
 }
