@@ -247,7 +247,9 @@ export default function Pricing() {
                 </ul>
 
                 <a
-                  href="#audit"
+                  href="https://calendly.com/connect-cloudsaathi/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredBtn(i)}
                   onMouseLeave={() => setHoveredBtn(null)}
                   style={{
@@ -282,7 +284,7 @@ export default function Pricing() {
                         }),
                   }}
                 >
-                  Start with Free Audit
+                  {tier.featured ? 'Book a Free Call \u2192' : 'Start with Free Audit'}
                 </a>
               </div>
             </Reveal>

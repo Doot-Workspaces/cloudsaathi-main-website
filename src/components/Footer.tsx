@@ -27,16 +27,17 @@ const COLUMNS: LinkColumn[] = [
     links: [
       { label: 'How It Works', href: '#process' },
       { label: 'Pricing', href: '#pricing' },
+      { label: 'Founders', href: '#founders' },
       { label: 'FAQ', href: '#faq' },
     ],
   },
   {
     header: 'Connect',
     links: [
-      { label: 'hello@cloudsaathi.com', href: 'mailto:hello@cloudsaathi.com' },
+      { label: 'connect@cloudsaathi.com', href: 'mailto:connect@cloudsaathi.com' },
       {
         label: 'Calendly',
-        href: 'https://calendly.com/cloudsaathi/free-audit',
+        href: 'https://calendly.com/connect-cloudsaathi/30min',
         external: true,
       },
       {

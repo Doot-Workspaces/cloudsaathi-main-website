@@ -161,7 +161,9 @@ export default function Hero() {
             {/* Buttons */}
             <div style={{ display: 'flex', gap: 16, marginTop: 36, flexWrap: 'wrap' }}>
               <a
-                href="#audit"
+                href="https://calendly.com/connect-cloudsaathi/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 onMouseEnter={() => setPrimaryHovered(true)}
                 onMouseLeave={() => setPrimaryHovered(false)}
                 style={{
@@ -205,6 +207,7 @@ export default function Hero() {
 
             {/* Proof points */}
             <div
+              className="hero-proof-points"
               style={{
                 display: 'flex',
                 gap: 0,
@@ -276,11 +279,18 @@ export default function Hero() {
         @media (max-width: 768px) {
           .hero-inner {
             flex-direction: column !important;
+            padding-top: 20px !important;
           }
           .hero-left,
           .hero-right {
             flex: 1 1 100% !important;
             width: 100%;
+          }
+          .hero-proof-points {
+            gap: 16px !important;
+          }
+          .hero-proof-points > div {
+            padding: 0 16px !important;
           }
         }
       `}</style>
