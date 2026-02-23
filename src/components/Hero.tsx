@@ -22,6 +22,7 @@ export default function Hero() {
         alignItems: 'center',
         position: 'relative',
         overflow: 'hidden',
+        paddingTop: 100,
       }}
     >
       {/* Background effects */}
