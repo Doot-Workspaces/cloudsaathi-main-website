@@ -1,55 +1,144 @@
-import { Reveal } from './Reveal';
+import { COLORS } from '../constants'
+import Reveal from './Reveal'
 
-const testimonials = [
+const TESTIMONIALS = [
   {
     quote:
-      'CloudSaathi joined our Slack on Monday and had our broken CI/CD pipeline fixed by Wednesday. They feel like part of the team — not an outside vendor.',
+      'They joined our Slack, understood our codebase in 48 hours, and fixed a deployment pipeline broken for months. Felt like hiring a senior engineer overnight.',
     author: 'Engineering Lead',
-    context: 'Series A SaaS, San Francisco',
+    role: 'Series A SaaS \u00b7 San Francisco',
   },
   {
     quote:
-      'They found $5K/month in wasted AWS spend we didn\'t even know about. The engagement paid for itself in the first two weeks.',
+      'We were spending $14K/month on AWS with zero visibility. Their audit found $5K/month in savings in the first week. Retainer paid for itself on day one.',
     author: 'CTO & Co-founder',
-    context: 'Series B FinTech, New York',
+    role: 'Series B FinTech \u00b7 New York',
   },
   {
     quote:
-      'What impressed me most was the communication. Weekly updates, clear Terraform PRs, and they actually documented everything. That\'s rare.',
+      'What sets them apart is communication. Weekly syncs, clear docs, proactively flagging problems before we notice. That\u2019s rare in DevOps consulting.',
     author: 'VP Engineering',
-    context: 'HealthTech, Austin',
+    role: 'HealthTech Startup \u00b7 Austin',
   },
-];
+]
 
-export function Trust() {
+export default function Trust() {
   return (
-    <section id="trust" className="border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <Reveal>
-          <p className="text-xs font-mono uppercase tracking-widest text-accent mb-4">
-            Why Teams Trust Us
-          </p>
-          <h2 className="text-3xl md:text-4xl font-display tracking-tight">
-            We become part of your team.
-          </h2>
-        </Reveal>
+    <section
+      id="trust"
+      style={{
+        borderTop: `1px solid ${COLORS.border}`,
+        padding: '120px 0',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1180,
+          margin: '0 auto',
+          padding: '0 24px',
+        }}
+      >
+        {/* Label */}
+        <p
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: '0.75rem',
+            color: COLORS.accent,
+            textTransform: 'uppercase',
+            letterSpacing: '0.14em',
+            marginBottom: 16,
+          }}
+        >
+          Why Teams Trust Us
+        </p>
 
-        <div className="mt-14 grid md:grid-cols-3 gap-4">
-          {testimonials.map((t, i) => (
-            <Reveal key={i} delay={i * 100}>
-              <div className="rounded-xl border border-border bg-card/50 p-6 md:p-8 h-full flex flex-col">
-                <blockquote className="text-base font-display italic text-white/90 leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <div className="mt-6 pt-4 border-t border-border">
-                  <p className="text-sm font-medium text-white">{t.author}</p>
-                  <p className="text-xs text-muted mt-0.5">{t.context}</p>
+        {/* Title */}
+        <h2
+          style={{
+            fontFamily: "'Newsreader', serif",
+            fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+            fontWeight: 400,
+            color: COLORS.text,
+            marginBottom: 56,
+          }}
+        >
+          We become part of your team.
+        </h2>
+
+        {/* Cards Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 20,
+          }}
+        >
+          {TESTIMONIALS.map((testimonial, index) => (
+            <Reveal key={index} delay={index * 120}>
+              <div
+                style={{
+                  background: COLORS.bgCard,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 14,
+                  padding: '32px 28px',
+                }}
+              >
+                {/* Quote mark */}
+                <div
+                  style={{
+                    fontFamily: "'Newsreader', serif",
+                    fontSize: '3rem',
+                    color: COLORS.accent,
+                    opacity: 0.4,
+                    lineHeight: 1,
+                    marginBottom: 8,
+                  }}
+                >
+                  &ldquo;
                 </div>
+
+                {/* Quote text */}
+                <p
+                  style={{
+                    fontFamily: "'Newsreader', serif",
+                    fontSize: '1.15rem',
+                    fontStyle: 'italic',
+                    color: COLORS.textSoft,
+                    lineHeight: 1.7,
+                    marginBottom: 24,
+                  }}
+                >
+                  {testimonial.quote}
+                </p>
+
+                {/* Author name */}
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    color: COLORS.text,
+                    marginBottom: 2,
+                  }}
+                >
+                  {testimonial.author}
+                </p>
+
+                {/* Author role */}
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: '0.75rem',
+                    color: COLORS.textMuted,
+                  }}
+                >
+                  {testimonial.role}
+                </p>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
