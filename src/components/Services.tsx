@@ -7,14 +7,14 @@ const SERVICE_CARDS = [
     tag: 'Core',
     tagColor: COLORS.accent,
     title: 'Fractional DevOps',
-    desc: 'A senior DevOps engineer embedded in your team part-time. We handle CI/CD, infra, monitoring, and incident response so your developers focus on product.',
+    desc: 'A senior DevOps engineer embedded in your team  -  part-time. CI/CD, infrastructure, monitoring, and incident response handled so your devs focus on product.',
     tools: ['AWS', 'GCP', 'Terraform', 'GitHub Actions', 'Docker'],
   },
   {
     tag: 'High ROI',
     tagColor: COLORS.warm,
     title: 'Cloud Cost Optimization',
-    desc: 'We audit your cloud spend line by line. Right-sizing, reserved instances, spot fleets, unused resources. Clients save 30\u201340% on average.',
+    desc: 'We audit your cloud spend line by line. Rightsizing, reserved instances, spot fleets, idle resource cleanup. Clients save 30-40% on average. We charge 20% of savings  -  you keep 80%.',
     tools: ['FinOps', 'Cost Explorer', 'Kubecost', 'Infracost'],
   },
   {
@@ -25,11 +25,11 @@ const SERVICE_CARDS = [
     tools: ['Kubernetes', 'Helm', 'ArgoCD', 'OPA', 'Prometheus'],
   },
   {
-    tag: 'Modernize',
-    tagColor: COLORS.accent,
-    title: 'IaC Migration & CI/CD',
-    desc: 'From manual deployments to fully automated infrastructure. Terraform, Pulumi, GitOps pipelines. Version-controlled, repeatable, auditable.',
-    tools: ['Terraform', 'Pulumi', 'GitLab CI', 'ArgoCD'],
+    tag: 'Compliance',
+    tagColor: COLORS.warm,
+    title: 'Security & Compliance',
+    desc: 'SOC 2, HIPAA, PCI-DSS readiness. IAM hardening, secrets management, policy-as-code. Get investor-ready infrastructure with an auditable compliance trail.',
+    tools: ['Vault', 'OPA', 'Kyverno', 'Checkov', 'tfsec'],
   },
 ]
 
@@ -85,12 +85,12 @@ export default function Services() {
           style={{
             fontSize: '1.05rem',
             color: COLORS.textSoft,
-            maxWidth: 520,
+            maxWidth: 560,
             marginBottom: 56,
             lineHeight: 1.6,
           }}
         >
-          Every engagement starts with a free audit. We find quick wins, build the roadmap, and execute — embedded in your team.
+          Every engagement starts with a free audit. We find quick wins, build the roadmap, and execute  -  embedded in your team, using your tools.
         </p>
 
         {/* Cards Grid */}
