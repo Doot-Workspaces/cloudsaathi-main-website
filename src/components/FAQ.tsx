@@ -11,7 +11,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does the cloud spend percentage cover?',
     answer:
-      'The percentage component ensures we scale with you. As your infrastructure grows, so does the complexity we manage. The flat base covers our operational cost; the percentage ensures we\u2019re investing proportionally in your success. For example, at $30K/mo cloud spend, Silver is $3,400/mo and Gold is $6,500/mo.',
+      'The percentage component ensures we scale with you. As your infrastructure grows, so does the complexity we manage. The flat base covers our operational cost; the percentage ensures we\u2019re investing proportionally in your success. For example, at $20K/mo cloud spend, Silver is $1,399/mo and Gold is $3,299/mo - far less than a full-time hire.',
   },
   {
     question: 'Can I switch plans?',

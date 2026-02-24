@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { COLORS } from '../constants'
+import { COLORS, CALENDLY_URL } from '../constants'
 import Reveal from './Reveal'
 import Terminal from './Terminal'
 
 const PROOF_POINTS = [
   { value: '30-40%', label: 'Avg cloud cost saved' },
-  { value: '3×', label: 'Faster deploys' },
+  { value: '3x', label: 'Faster deploys' },
   { value: '2-hr', label: 'Incident response SLA' },
-  { value: 'Zero', label: 'Lock-in contracts' },
+  { value: '$999', label: 'Starting from /mo' },
 ]
 
 export default function Hero() {
@@ -34,7 +34,6 @@ export default function Hero() {
           zIndex: 0,
         }}
       >
-        {/* Grid pattern */}
         <div
           style={{
             position: 'absolute',
@@ -45,8 +44,6 @@ export default function Hero() {
             backgroundSize: '60px 60px',
           }}
         />
-
-        {/* Green gradient orb */}
         <div
           style={{
             position: 'absolute',
@@ -57,8 +54,6 @@ export default function Hero() {
             background: `radial-gradient(circle, ${COLORS.accentGlow} 0%, transparent 60%)`,
           }}
         />
-
-        {/* Warm gradient orb */}
         <div
           style={{
             position: 'absolute',
@@ -66,7 +61,7 @@ export default function Hero() {
             left: '-10%',
             width: 500,
             height: 500,
-            background: 'radial-gradient(circle, rgba(255,138,80,0.06) 0%, transparent 60%)',
+            background: `radial-gradient(circle, ${COLORS.purpleDim} 0%, transparent 60%)`,
           }}
         />
       </div>
@@ -121,7 +116,7 @@ export default function Hero() {
                   letterSpacing: '0.08em',
                 }}
               >
-                ACCEPTING CLIENTS · Q1 2026
+                NOW ACCEPTING CLIENTS
               </span>
             </div>
 
@@ -154,14 +149,16 @@ export default function Hero() {
                 marginBottom: 0,
               }}
             >
-              Senior DevOps engineers embedded in your team  -  CI/CD, Kubernetes,
-              Terraform, cloud cost optimization. From $2,500/mo, a fraction of a full-time hire.
+              Senior DevOps engineers embedded in your team. CI/CD, Kubernetes,
+              Terraform, cloud cost optimization - from{' '}
+              <strong style={{ color: COLORS.accent, fontWeight: 700 }}>$999/mo</strong>,
+              a fraction of a full-time hire.
             </p>
 
             {/* Buttons */}
             <div style={{ display: 'flex', gap: 16, marginTop: 36, flexWrap: 'wrap' }}>
               <a
-                href="https://calendly.com/connect-cloudsaathi/30min"
+                href={CALENDLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => setPrimaryHovered(true)}
@@ -181,7 +178,7 @@ export default function Hero() {
                   boxShadow: primaryHovered ? '0 0 30px rgba(0,229,160,0.25)' : 'none',
                 }}
               >
-                Get a Free Infra Audit →
+                Get a Free Infra Audit &rarr;
               </a>
               <a
                 href="#pricing"
@@ -261,7 +258,6 @@ export default function Hero() {
         </Reveal>
       </div>
 
-      {/* Responsive + animations */}
       <style>{`
         @keyframes pulseDot {
           0%, 100% { opacity: 1; transform: scale(1); }
