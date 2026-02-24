@@ -88,6 +88,8 @@ interface ContinuousPlan {
   comms: string
   features: string[]
   excluded: string[]
+  example: string
+  cta: string
   featured?: boolean
 }
 
@@ -115,7 +117,7 @@ const PLANS: ContinuousPlan[] = [
       'Cloud cost optimization sprints',
       'Security hardening & compliance',
     ],
-    example: 'Your infra costs $20K → you pay $2K. That's it.',
+    example: "Your infra costs $20K → you pay $2K. That's it.",
     cta: 'Start with Free Audit',
     featured: false,
   },
@@ -145,7 +147,6 @@ const PLANS: ContinuousPlan[] = [
     ],
     example: 'Server bill is $5K/mo → you pay $500/mo. Scales with you.',
     cta: 'Book a Free Call →',
-    featured: true,
   },
 ]
 
@@ -190,7 +191,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Simple Pricing
+            Transparent Pricing
           </p>
         </Reveal>
 
