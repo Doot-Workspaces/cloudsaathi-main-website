@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { COLORS } from '../constants'
+import { COLORS, CALENDLY_URL, EMAIL } from '../constants'
 
 interface FooterLink {
   label: string
@@ -42,10 +42,10 @@ const COLUMNS: LinkColumn[] = [
   {
     header: 'Connect',
     links: [
-      { label: 'connect@cloudsaathi.com', href: 'mailto:connect@cloudsaathi.com' },
+      { label: EMAIL, href: `mailto:${EMAIL}` },
       {
         label: 'Calendly',
-        href: 'https://calendly.com/connect-cloudsaathi/30min',
+        href: CALENDLY_URL,
         external: true,
       },
       {
@@ -112,7 +112,7 @@ export default function Footer() {
                 lineHeight: 1.5,
               }}
             >
-              DevOps-as-a-Service for startups that ship. From $2,500/mo.
+              DevOps-as-a-Service for startups that ship. From $999/mo.
             </p>
           </div>
 
