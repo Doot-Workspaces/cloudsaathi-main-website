@@ -4,9 +4,9 @@ import Reveal from './Reveal'
 import Terminal from './Terminal'
 
 const PROOF_POINTS = [
-  { value: '40%', label: 'Avg cloud cost saved' },
-  { value: '3\u00d7', label: 'Faster deploys' },
-  { value: '< 4hr', label: 'Incident response' },
+  { value: '30–40%', label: 'Avg cloud cost saved' },
+  { value: '3×', label: 'Faster deploys' },
+  { value: '2-hr', label: 'Incident response SLA' },
   { value: 'Zero', label: 'Lock-in contracts' },
 ]
 
@@ -154,8 +154,8 @@ export default function Hero() {
                 marginBottom: 0,
               }}
             >
-              We embed senior DevOps engineers into your team on-demand. CI/CD, Kubernetes,
-              Terraform, cloud cost optimization — at a fraction of a full-time hire.
+              Senior DevOps engineers embedded in your team — CI/CD, Kubernetes,
+              Terraform, cloud cost optimization. From $2,500/mo, a fraction of a full-time hire.
             </p>
 
             {/* Buttons */}

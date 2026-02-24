@@ -18,15 +18,23 @@ const COLUMNS: LinkColumn[] = [
     links: [
       { label: 'Fractional DevOps', href: '#services' },
       { label: 'Cost Optimization', href: '#services' },
+      { label: 'Security & Compliance', href: '#services' },
       { label: 'Kubernetes', href: '#services' },
-      { label: 'IaC & CI/CD', href: '#services' },
+    ],
+  },
+  {
+    header: 'Pricing',
+    links: [
+      { label: 'One-Time Engagements', href: '#pricing' },
+      { label: 'Silver Plan', href: '#pricing' },
+      { label: 'Gold Plan', href: '#pricing' },
+      { label: 'Free Audit', href: '#audit' },
     ],
   },
   {
     header: 'Company',
     links: [
       { label: 'How It Works', href: '#process' },
-      { label: 'Pricing', href: '#pricing' },
       { label: 'Founders', href: '#founders' },
       { label: 'FAQ', href: '#faq' },
     ],
@@ -74,6 +82,7 @@ export default function Footer() {
       >
         {/* Top row */}
         <div
+          className="footer-top"
           style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -99,9 +108,11 @@ export default function Footer() {
                 fontSize: '0.85rem',
                 color: COLORS.textMuted,
                 marginTop: 8,
+                maxWidth: 260,
+                lineHeight: 1.5,
               }}
             >
-              Fractional DevOps for startups that ship.
+              DevOps-as-a-Service for startups that ship. From $2,500/mo.
             </p>
           </div>
 
@@ -109,7 +120,7 @@ export default function Footer() {
           <div
             style={{
               display: 'flex',
-              gap: 64,
+              gap: 56,
               flexWrap: 'wrap',
             }}
           >
