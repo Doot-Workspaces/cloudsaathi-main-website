@@ -9,14 +9,29 @@ const FAQ_ITEMS = [
       'Freelancers are task-executors. We\u2019re a structured DevOps practice: discovery, audit, roadmap, execution, ongoing support. You get process, documentation, and knowledge transfer \u2014 not just someone running commands.',
   },
   {
-    question: 'What timezone do you operate in?',
+    question: 'What does the cloud spend percentage cover?',
     answer:
-      'We\u2019re based in IST with a 4\u20136 hour overlap with US business hours. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained while you sleep.',
+      'The percentage component ensures we scale with you. As your infrastructure grows, so does the complexity we manage. The flat base covers our operational cost; the percentage ensures we\u2019re investing proportionally in your success. For example, at $30K/mo cloud spend, Silver is $3,400/mo and Gold is $6,500/mo.',
   },
   {
-    question: 'Can I scale up or down?',
+    question: 'Can I switch plans?',
     answer:
-      'Absolutely. All plans are month-to-month. Scale up before a launch, scale down during quiet periods. Zero lock-in, zero penalties.',
+      'Yes. All plans are month-to-month. You can upgrade from Silver to Gold anytime, or start with a one-time engagement and move to a retainer later. No penalties, no lock-in.',
+  },
+  {
+    question: 'What happens if my cloud spend changes?',
+    answer:
+      'Your monthly fee adjusts automatically. If your cloud bill drops (because we optimized it), the percentage component decreases. The flat base stays the same, so we\u2019re never penalized for doing our job well.',
+  },
+  {
+    question: 'Is there a minimum commitment?',
+    answer:
+      'No long-term commitment required. Plans are month-to-month with 30-day notice to cancel. We also offer a 2-week free trial on Silver and Gold plans so you can evaluate the fit risk-free.',
+  },
+  {
+    question: 'What timezone do you operate in?',
+    answer:
+      'We\u2019re based in IST with a 4\u20136 hour overlap with US East business hours. Gold plan includes after-hours on-call for P0/P1 incidents. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained around the clock.',
   },
   {
     question: 'Do you embed with our team?',
@@ -24,14 +39,9 @@ const FAQ_ITEMS = [
       'Yes. We join your Slack, attend standups, use your Git workflow, and document everything in your systems. When the engagement ends, you own everything we built.',
   },
   {
-    question: 'What if we\u2019re not happy?',
-    answer:
-      'We offer a 2-week trial at the start of every engagement. If you\u2019re not satisfied with the quality of work, you pay nothing for those two weeks.',
-  },
-  {
     question: 'How fast can you start?',
     answer:
-      'Typical onboarding is 3\u20135 business days. For urgent production issues, we can start within 48 hours.',
+      'Typical onboarding is 3\u20135 business days. For urgent production issues, we can start within 48 hours. Every engagement starts with a free 30-minute discovery call and a 1-page mini-audit.',
   },
 ]
 

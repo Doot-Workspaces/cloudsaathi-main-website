@@ -5,8 +5,8 @@ import Reveal from './Reveal'
 const CHIPS = [
   { label: '30-min call', check: '\u2713' },
   { label: 'No commitment', check: '\u2713' },
-  { label: 'Written report', check: '\u2713' },
-  { label: 'Actionable insights', check: '\u2713' },
+  { label: '1-page written report', check: '\u2713' },
+  { label: '3 quick wins', check: '\u2713' },
 ]
 
 export default function AuditCTA() {
@@ -64,13 +64,13 @@ export default function AuditCTA() {
             style={{
               fontSize: '1.05rem',
               color: COLORS.textSoft,
-              maxWidth: 440,
+              maxWidth: 480,
               margin: '0 auto 32px',
               lineHeight: 1.6,
             }}
           >
-            3 quick wins you can implement today. 3 strategic recommendations
-            for next quarter. No strings attached.
+            3 quick wins you can implement this week. 3 strategic recommendations
+            for next quarter. This is how every client relationship starts — no strings attached.
           </p>
 
           {/* Detail chips */}

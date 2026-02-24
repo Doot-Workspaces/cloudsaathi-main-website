@@ -7,28 +7,28 @@ const steps = [
     number: '01',
     title: 'Discovery Call',
     description:
-      '30 minutes. We learn your stack, pain points, goals. Honest assessment of fit.',
+      '30-minute call. We learn your stack, pain points, and goals. Honest assessment of fit — no sales pitch.',
     duration: 'Day 1',
   },
   {
     number: '02',
-    title: 'Free Infra Audit',
+    title: 'Free Mini-Audit',
     description:
-      'We assess your setup. You get a 1-page report: 3 quick wins + 3 strategic moves.',
+      '1-page report: 3 quick wins you can implement this week + 3 strategic recommendations for next quarter.',
     duration: 'Day 2–3',
   },
   {
     number: '03',
-    title: 'Work Plan',
+    title: 'Proposal',
     description:
-      'Clear roadmap. Deliverables, timelines, costs. Reviewed together and adjusted.',
+      'Choose your path: a fixed-price one-time project, or a Silver/Gold retainer. Clear scope, deliverables, timelines.',
     duration: 'Day 4–5',
   },
   {
     number: '04',
     title: 'Execution',
     description:
-      'We join your Slack, attend standups, and ship. Weekly syncs. Full transparency.',
+      'We join your Slack, attend standups, and ship. Weekly syncs, written reports, full transparency.',
     duration: 'Ongoing',
   },
 ];
@@ -204,7 +204,7 @@ const Process: React.FC = () => {
                 marginBottom: 72,
               }}
             >
-              No long onboarding. No bureaucracy. We get to work fast.
+              No long onboarding. No bureaucracy. Start with a free audit, stay for the partnership.
             </p>
           </Reveal>
 
