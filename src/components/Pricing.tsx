@@ -115,6 +115,9 @@ const PLANS: ContinuousPlan[] = [
       'Cloud cost optimization sprints',
       'Security hardening & compliance',
     ],
+    example: 'Your infra costs $20K → you pay $2K. That's it.',
+    cta: 'Start with Free Audit',
+    featured: false,
   },
   {
     tier: 'GOLD',
@@ -140,6 +143,9 @@ const PLANS: ContinuousPlan[] = [
       'SOC 2 / HIPAA compliance (billed separately)',
       '24/7 NOC-style coverage',
     ],
+    example: 'Server bill is $5K/mo → you pay $500/mo. Scales with you.',
+    cta: 'Book a Free Call →',
+    featured: true,
   },
 ]
 
@@ -184,7 +190,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Transparent Pricing
+            Simple Pricing
           </p>
         </Reveal>
 
