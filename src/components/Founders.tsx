@@ -5,19 +5,19 @@ import Reveal from './Reveal';
 const founders = [
   {
     name: 'Ankit Jangir',
-    role: 'Co-founder & DevOps Architect',
+    role: 'Co-founder — DevOps, Compliance & Development',
     initials: 'AJ',
     linkedin: 'https://www.linkedin.com/in/ankit-jangir-devops/',
-    bio: '8+ years building and scaling cloud infrastructure. Previously led DevOps at high-growth startups. Specializes in Kubernetes, Terraform, and cloud cost optimization.',
-    specialties: ['Kubernetes', 'Terraform', 'AWS', 'Cost Optimization'],
+    bio: '5+ years across DevOps, compliance, and full-stack development. Bridges the gap between shipping fast and staying compliant — from CI/CD pipelines to SOC 2 readiness to writing the code that ties it all together.',
+    specialties: ['DevOps', 'Compliance', 'Development', 'AWS', 'Terraform'],
   },
   {
     name: 'Nihaan Mohammed',
-    role: 'Co-founder & Platform Engineer',
+    role: 'Co-founder — Product & Vertical Management',
     initials: 'NM',
     linkedin: 'https://www.linkedin.com/in/nihaan-mohammed/',
-    bio: '7+ years in platform engineering and CI/CD automation. Built developer platforms serving hundreds of engineers. Passionate about making infrastructure invisible.',
-    specialties: ['CI/CD', 'Platform Eng', 'GCP', 'GitOps'],
+    bio: 'Runs the product side of CloudSaathi. Experienced in product vertical management — scoping client needs, defining roadmaps, and making sure every engagement delivers measurable outcomes.',
+    specialties: ['Product Strategy', 'Vertical Mgmt', 'Client Success', 'Roadmapping'],
   },
 ];
 

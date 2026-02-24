@@ -2,54 +2,43 @@ import { useState } from 'react'
 import { COLORS } from '../constants'
 import Reveal from './Reveal'
 
-interface Tier {
-  label: string
-  name: string
-  price: string
-  features: string[]
-  featured?: boolean
-}
-
-const tiers: Tier[] = [
+const models = [
   {
-    label: 'STARTER',
-    name: 'Launch',
-    price: '$2,000',
-    features: [
-      '~10 hrs/month of DevOps work',
-      'CI/CD pipeline setup & maintenance',
-      'Basic monitoring & alerting',
-      'Shared Slack channel',
-      'Monthly infrastructure review',
+    label: 'ONE-TIME PROJECTS',
+    name: 'Build & Ship',
+    rate: '10%',
+    basis: 'of your infrastructure cost',
+    description:
+      'Migrations, setups, architecture overhauls — scoped and delivered. You pay a flat 10% of the infrastructure spend involved.',
+    includes: [
+      'Cloud migration & setup',
+      'CI/CD pipeline builds',
+      'Infrastructure-as-Code (Terraform / Pulumi)',
+      'Architecture design & review',
+      'Security hardening & compliance',
     ],
+    example: 'Your infra costs $20K → you pay $2K. That's it.',
+    cta: 'Start with Free Audit',
+    featured: false,
   },
   {
-    label: 'GROWTH',
-    name: 'Scale',
-    price: '$4,000',
-    featured: true,
-    features: [
-      '~25 hrs/month of DevOps work',
-      'Full IaC management (Terraform/Pulumi)',
-      'Kubernetes cluster management',
+    label: 'MANAGED / CONTINUOUS',
+    name: 'Run & Scale',
+    rate: '10%',
+    basis: 'of your monthly server cost',
+    description:
+      'Ongoing DevOps support, monitoring, optimization — billed monthly as a percentage of your running infrastructure.',
+    includes: [
       'Cloud cost optimization',
-      'Weekly sync + Slack support',
-      '4-hour incident response SLA',
+      'Monitoring, alerting & incident response',
+      'Kubernetes & container management',
+      'Continuous deployment pipelines',
+      'Weekly syncs + Slack support',
+      'Dedicated engineer for your stack',
     ],
-  },
-  {
-    label: 'ENTERPRISE',
-    name: 'Dominate',
-    price: '$6,500',
-    features: [
-      '~40 hrs/month of DevOps work',
-      'Everything in Scale, plus:',
-      'SOC 2 / HIPAA compliance setup',
-      '24/7 on-call coverage',
-      'Architecture reviews & roadmap',
-      'Dedicated senior engineer',
-      '2-hour incident response SLA',
-    ],
+    example: 'Server bill is $5K/mo → you pay $500/mo. Scales with you.',
+    cta: 'Book a Free Call →',
+    featured: true,
   },
 ]
 
@@ -82,7 +71,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Transparent Pricing
+            Simple Pricing
           </p>
         </Reveal>
 
@@ -96,7 +85,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Pay for what you need.
+            10% of your infra cost. That's it.
           </h2>
         </Reveal>
 
@@ -105,31 +94,34 @@ export default function Pricing() {
             style={{
               fontSize: '1.05rem',
               color: COLORS.textSoft,
-              maxWidth: 520,
+              maxWidth: 560,
               marginBottom: 56,
               lineHeight: 1.6,
             }}
           >
-            No retainer lock-ins. No hidden fees. Month-to-month. Pause or cancel anytime.
+            No fixed tiers. No guesswork. Whether it's a one-time project or
+            ongoing support, you pay 10% of your infrastructure spend —
+            nothing more.
           </p>
         </Reveal>
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: 20,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: 24,
+            maxWidth: 860,
           }}
         >
-          {tiers.map((tier, i) => (
-            <Reveal key={tier.label} delay={200 + i * 120}>
+          {models.map((model, i) => (
+            <Reveal key={model.label} delay={200 + i * 140}>
               <div
                 style={{
                   position: 'relative',
-                  background: tier.featured
+                  background: model.featured
                     ? `linear-gradient(180deg, ${COLORS.accentDim} 0%, ${COLORS.bgCard} 40%)`
                     : COLORS.bgCard,
-                  border: `1px solid ${tier.featured ? COLORS.accent : COLORS.border}`,
+                  border: `1px solid ${model.featured ? COLORS.accent : COLORS.border}`,
                   borderRadius: 14,
                   padding: '40px 32px',
                   height: '100%',
@@ -137,7 +129,7 @@ export default function Pricing() {
                   flexDirection: 'column',
                 }}
               >
-                {tier.featured && (
+                {model.featured && (
                   <span
                     style={{
                       position: 'absolute',
@@ -171,7 +163,7 @@ export default function Pricing() {
                     marginBottom: 8,
                   }}
                 >
-                  {tier.label}
+                  {model.label}
                 </p>
 
                 <h3
@@ -183,35 +175,47 @@ export default function Pricing() {
                     marginBottom: 20,
                   }}
                 >
-                  {tier.name}
+                  {model.name}
                 </h3>
 
-                <div style={{ marginBottom: 0 }}>
+                <div style={{ marginBottom: 8 }}>
                   <span
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '2.2rem',
+                      fontSize: '2.8rem',
                       fontWeight: 700,
                       color: COLORS.text,
                     }}
                   >
-                    {tier.price}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.85rem',
-                      color: COLORS.textMuted,
-                    }}
-                  >
-                    /mo
+                    {model.rate}
                   </span>
                 </div>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.8rem',
+                    color: COLORS.textMuted,
+                    marginBottom: 16,
+                  }}
+                >
+                  {model.basis}
+                </p>
+
+                <p
+                  style={{
+                    fontSize: '0.92rem',
+                    color: COLORS.textSoft,
+                    lineHeight: 1.6,
+                    marginBottom: 24,
+                  }}
+                >
+                  {model.description}
+                </p>
 
                 <div
                   style={{
                     borderTop: `1px solid ${COLORS.border}`,
-                    margin: '24px 0',
+                    margin: '0 0 20px',
                   }}
                 />
 
@@ -223,9 +227,9 @@ export default function Pricing() {
                     flex: 1,
                   }}
                 >
-                  {tier.features.map((feature) => (
+                  {model.includes.map((item) => (
                     <li
-                      key={feature}
+                      key={item}
                       style={{
                         fontSize: '0.9rem',
                         color: COLORS.textSoft,
@@ -241,10 +245,32 @@ export default function Pricing() {
                       >
                         &rarr;
                       </span>
-                      {feature}
+                      {item}
                     </li>
                   ))}
                 </ul>
+
+                <div
+                  style={{
+                    background: `${COLORS.accent}08`,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 8,
+                    padding: '12px 16px',
+                    marginTop: 24,
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.78rem',
+                      color: COLORS.accent,
+                      margin: 0,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {model.example}
+                  </p>
+                </div>
 
                 <a
                   href="https://calendly.com/connect-cloudsaathi/30min"
@@ -256,15 +282,15 @@ export default function Pricing() {
                     display: 'block',
                     textAlign: 'center',
                     textDecoration: 'none',
-                    fontWeight: tier.featured ? 700 : 600,
+                    fontWeight: model.featured ? 700 : 600,
                     fontSize: '0.95rem',
                     padding: '14px 0',
                     width: '100%',
                     borderRadius: 10,
-                    marginTop: 32,
+                    marginTop: 24,
                     cursor: 'pointer',
                     transition: 'all 0.25s ease',
-                    ...(tier.featured
+                    ...(model.featured
                       ? {
                           background: COLORS.accent,
                           color: '#06080a',
@@ -284,24 +310,28 @@ export default function Pricing() {
                         }),
                   }}
                 >
-                  {tier.featured ? 'Book a Free Call \u2192' : 'Start with Free Audit'}
+                  {model.cta}
                 </a>
               </div>
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={560}>
+        <Reveal delay={500}>
           <p
             style={{
               textAlign: 'center',
               color: COLORS.textMuted,
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               marginTop: 48,
               fontFamily: "'IBM Plex Mono', monospace",
+              lineHeight: 1.7,
             }}
           >
-            All plans month-to-month. Custom scope? Let&rsquo;s talk. Fixed-price projects from $3,000.
+            No retainer lock-ins. No hidden fees. Month-to-month for managed
+            services.
+            <br />
+            Minimum project size: $500. Custom scope? Let&rsquo;s talk.
           </p>
         </Reveal>
       </div>
