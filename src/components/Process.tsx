@@ -7,7 +7,7 @@ const steps = [
     number: '01',
     title: 'Discovery Call',
     description:
-      '30-minute call. We learn your stack, pain points, and goals. Honest assessment of fit — no sales pitch.',
+      '30-minute call. We learn your stack, pain points, and goals. Honest assessment of fit  -  no sales pitch.',
     duration: 'Day 1',
   },
   {
@@ -15,14 +15,14 @@ const steps = [
     title: 'Free Mini-Audit',
     description:
       '1-page report: 3 quick wins you can implement this week + 3 strategic recommendations for next quarter.',
-    duration: 'Day 2–3',
+    duration: 'Day 2-3',
   },
   {
     number: '03',
     title: 'Proposal',
     description:
       'Choose your path: a fixed-price one-time project, or a Silver/Gold retainer. Clear scope, deliverables, timelines.',
-    duration: 'Day 4–5',
+    duration: 'Day 4-5',
   },
   {
     number: '04',

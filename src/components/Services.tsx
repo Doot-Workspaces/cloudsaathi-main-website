@@ -7,14 +7,14 @@ const SERVICE_CARDS = [
     tag: 'Core',
     tagColor: COLORS.accent,
     title: 'Fractional DevOps',
-    desc: 'A senior DevOps engineer embedded in your team — part-time. CI/CD, infrastructure, monitoring, and incident response handled so your devs focus on product.',
+    desc: 'A senior DevOps engineer embedded in your team  -  part-time. CI/CD, infrastructure, monitoring, and incident response handled so your devs focus on product.',
     tools: ['AWS', 'GCP', 'Terraform', 'GitHub Actions', 'Docker'],
   },
   {
     tag: 'High ROI',
     tagColor: COLORS.warm,
     title: 'Cloud Cost Optimization',
-    desc: 'We audit your cloud spend line by line. Rightsizing, reserved instances, spot fleets, idle resource cleanup. Clients save 30–40% on average. We charge 20% of savings — you keep 80%.',
+    desc: 'We audit your cloud spend line by line. Rightsizing, reserved instances, spot fleets, idle resource cleanup. Clients save 30-40% on average. We charge 20% of savings  -  you keep 80%.',
     tools: ['FinOps', 'Cost Explorer', 'Kubecost', 'Infracost'],
   },
   {
@@ -90,7 +90,7 @@ export default function Services() {
             lineHeight: 1.6,
           }}
         >
-          Every engagement starts with a free audit. We find quick wins, build the roadmap, and execute — embedded in your team, using your tools.
+          Every engagement starts with a free audit. We find quick wins, build the roadmap, and execute  -  embedded in your team, using your tools.
         </p>
 
         {/* Cards Grid */}
