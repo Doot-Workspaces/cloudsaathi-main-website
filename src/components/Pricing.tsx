@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { COLORS } from '../constants'
 import Reveal from './Reveal'
 
-/* ── One-Time Engagements ── */
+/* --- One-Time Engagements --- */
 interface OneTimeService {
   title: string
   price: string
@@ -14,8 +14,8 @@ interface OneTimeService {
 const ONE_TIME_SERVICES: OneTimeService[] = [
   {
     title: 'Infrastructure Audit',
-    price: '$2,500 – $5,000',
-    duration: '3–5 days',
+    price: '$2,500 - $5,000',
+    duration: '3-5 days',
     bullets: [
       '5 quick wins + 5 strategic recommendations',
       'Risk heatmap & cloud spend analysis',
@@ -25,8 +25,8 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Cloud Cost Optimization',
-    price: '20% of savings or $5K–$10K',
-    duration: '2–4 weeks',
+    price: '20% of savings or $5K-$10K',
+    duration: '2-4 weeks',
     bullets: [
       'Rightsizing, RI/SP, idle cleanup',
       'Requires $10K+/mo cloud spend',
@@ -36,8 +36,8 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Cloud Migration',
-    price: '$8,000 – $25,000',
-    duration: '4–12 weeks',
+    price: '$8,000 - $25,000',
+    duration: '4-12 weeks',
     bullets: [
       'On-prem → AWS/GCP, or cloud-to-cloud',
       'Monolith → containers / K8s',
@@ -46,8 +46,8 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Infra Upgrade & Modernization',
-    price: '$5,000 – $15,000',
-    duration: '2–6 weeks',
+    price: '$5,000 - $15,000',
+    duration: '2-6 weeks',
     bullets: [
       'CI/CD overhaul (GitHub Actions, GitLab CI)',
       'Docker & Kubernetes from scratch',
@@ -56,8 +56,8 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Security & Compliance',
-    price: '$5,000 – $12,000',
-    duration: '2–4 weeks',
+    price: '$5,000 - $12,000',
+    duration: '2-4 weeks',
     bullets: [
       'SOC 2, HIPAA, PCI-DSS readiness',
       'IAM, encryption, secrets management',
@@ -66,8 +66,8 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Architecture Review',
-    price: '$3,000 – $6,000',
-    duration: '1–2 weeks',
+    price: '$3,000 - $6,000',
+    duration: '1-2 weeks',
     bullets: [
       'Well-Architected Framework assessment',
       'Technical due diligence for investors',
@@ -76,7 +76,7 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
 ]
 
-/* ── Continuous Plans ── */
+/* --- Continuous Plans --- */
 interface ContinuousPlan {
   tier: string
   name: string
@@ -149,7 +149,7 @@ const PLANS: ContinuousPlan[] = [
   },
 ]
 
-/* ── Cloud Spend Calculator examples ── */
+/* --- Cloud Spend Calculator examples --- */
 const SPEND_EXAMPLES = [
   { spend: '$10K', silver: '$2,800', gold: '$5,500' },
   { spend: '$25K', silver: '$3,250', gold: '$6,250' },
@@ -178,7 +178,7 @@ export default function Pricing() {
           padding: '0 24px',
         }}
       >
-        {/* ─── Section header ─── */}
+        {/* --- Section header --- */}
         <Reveal>
           <p
             style={{
@@ -222,9 +222,9 @@ export default function Pricing() {
           </p>
         </Reveal>
 
-        {/* ─────────────────────────────────────────────── */}
-        {/* SECTION A — One-Time Engagements               */}
-        {/* ─────────────────────────────────────────────── */}
+        {/* ----------------------------------------------- */}
+        {/* SECTION A -- One-Time Engagements               */}
+        {/* ----------------------------------------------- */}
         <Reveal delay={200}>
           <h3
             style={{
@@ -393,9 +393,9 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* ─────────────────────────────────────────────── */}
-        {/* SECTION B — Continuous Plans (Silver | Gold)    */}
-        {/* ─────────────────────────────────────────────── */}
+        {/* ----------------------------------------------- */}
+        {/* SECTION B -- Continuous Plans (Silver | Gold)    */}
+        {/* ----------------------------------------------- */}
         <Reveal delay={200}>
           <h3
             style={{
@@ -724,7 +724,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* ─── Effective cost examples ─── */}
+        {/* --- Effective cost examples --- */}
         <Reveal delay={480}>
           <div
             style={{
@@ -817,7 +817,7 @@ export default function Pricing() {
           </div>
         </Reveal>
 
-        {/* ─── Bottom note ─── */}
+        {/* --- Bottom note --- */}
         <Reveal delay={560}>
           <p
             style={{

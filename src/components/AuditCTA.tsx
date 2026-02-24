@@ -70,7 +70,7 @@ export default function AuditCTA() {
             }}
           >
             3 quick wins you can implement this week. 3 strategic recommendations
-            for next quarter. This is how every client relationship starts — no strings attached.
+            for next quarter. This is how every client relationship starts  -  no strings attached.
           </p>
 
           {/* Detail chips */}
