@@ -1,6 +1,75 @@
-import { useState } from 'react'
-import { COLORS } from '../constants'
+import { useState, useMemo } from 'react'
+import { COLORS, CALENDLY_URL } from '../constants'
 import Reveal from './Reveal'
+
+/* --- Hour Packs (Fractional Model) --- */
+interface HourPack {
+  name: string
+  tagline: string
+  hours: number
+  price: number
+  perHour: number
+  sla: string
+  features: string[]
+  recommended?: boolean
+  cta: string
+}
+
+const HOUR_PACKS: HourPack[] = [
+  {
+    name: 'Starter',
+    tagline: 'For seed-stage startups getting off the ground.',
+    hours: 5,
+    price: 149,
+    perHour: 29,
+    sla: 'Next business day',
+    features: [
+      'CI/CD pipeline setup & fixes',
+      'Basic monitoring & alerting',
+      'Slack support (business hours)',
+      'Monthly infra health check',
+      'Unused hours roll over 1 month',
+    ],
+    cta: 'Start with Starter',
+  },
+  {
+    name: 'Growth',
+    tagline: 'Your go-to DevOps partner as you scale.',
+    hours: 15,
+    price: 399,
+    perHour: 26,
+    sla: '4-hour response',
+    features: [
+      'Everything in Starter, plus:',
+      'Terraform / IaC management',
+      'Kubernetes cluster ops',
+      'Cloud cost optimization',
+      'Weekly sync + written report',
+      'Unused hours roll over 1 month',
+    ],
+    recommended: true,
+    cta: 'Start with Growth',
+  },
+  {
+    name: 'Scale',
+    tagline: 'Near full-time coverage at a fraction of the cost.',
+    hours: 40,
+    price: 899,
+    perHour: 22,
+    sla: '2-hour response + on-call',
+    features: [
+      'Everything in Growth, plus:',
+      'Security hardening & compliance',
+      'Architecture advisory',
+      'After-hours P0/P1 on-call',
+      'Quarterly infra review',
+      'Unused hours roll over 1 month',
+    ],
+    cta: 'Start with Scale',
+  },
+]
+
+const PAYG_RATE = 49 // pay-as-you-go hourly rate
 
 /* --- One-Time Engagements --- */
 interface OneTimeService {
@@ -9,44 +78,47 @@ interface OneTimeService {
   duration: string
   bullets: string[]
   tag?: string
+  tagColor?: string
 }
 
 const ONE_TIME_SERVICES: OneTimeService[] = [
   {
     title: 'Infrastructure Audit',
-    price: '$2,500 - $5,000',
+    price: 'FREE - $299',
     duration: '3-5 days',
     bullets: [
-      '5 quick wins + 5 strategic recommendations',
-      'Risk heatmap & cloud spend analysis',
-      'Upsell-free written report',
+      'Free mini-audit: 3 quick wins (30-min call)',
+      'Full audit: risk heatmap + spend analysis',
+      'Written report with actionable roadmap',
     ],
-    tag: 'Most Popular',
+    tag: 'Start Here',
+    tagColor: COLORS.accent,
   },
   {
     title: 'Cloud Cost Optimization',
-    price: '20% of savings or $5K-$10K',
+    price: '15% of savings found',
     duration: '2-4 weeks',
     bullets: [
       'Rightsizing, RI/SP, idle cleanup',
-      'Requires $10K+/mo cloud spend',
-      'Minimum fee $3,000 (floor)',
+      'You keep 85% of savings',
+      'No savings = no charge',
     ],
     tag: 'High ROI',
+    tagColor: COLORS.warm,
   },
   {
     title: 'Cloud Migration',
-    price: '$8,000 - $25,000',
+    price: '$999 - $2,999',
     duration: '4-12 weeks',
     bullets: [
-      'On-prem → AWS/GCP, or cloud-to-cloud',
-      'Monolith → containers / K8s',
+      'On-prem to AWS/GCP, cloud-to-cloud',
+      'Monolith to containers / K8s',
       'IaC, runbook & monitoring included',
     ],
   },
   {
-    title: 'Infra Upgrade & Modernization',
-    price: '$5,000 - $15,000',
+    title: 'Infra Upgrade',
+    price: '$499 - $1,499',
     duration: '2-6 weeks',
     bullets: [
       'CI/CD overhaul (GitHub Actions, GitLab CI)',
@@ -56,17 +128,19 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Security & Compliance',
-    price: '$5,000 - $12,000',
+    price: '$799 - $1,999',
     duration: '2-4 weeks',
     bullets: [
       'SOC 2, HIPAA, PCI-DSS readiness',
       'IAM, encryption, secrets management',
       'Policy-as-code (OPA/Kyverno)',
     ],
+    tag: 'Compliance',
+    tagColor: COLORS.purple,
   },
   {
     title: 'Architecture Review',
-    price: '$3,000 - $6,000',
+    price: '$299 - $699',
     duration: '1-2 weeks',
     bullets: [
       'Well-Architected Framework assessment',
@@ -76,93 +150,52 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
 ]
 
-/* --- Continuous Plans --- */
-interface ContinuousPlan {
-  tier: string
-  name: string
-  tagline: string
-  basePrice: string
-  pctLabel: string
-  hours: string
-  sla: string
-  comms: string
-  features: string[]
-  excluded: string[]
-  example: string
-  cta: string
-  featured?: boolean
+/* --- Hours Calculator --- */
+const SLIDER_MIN = 1
+const SLIDER_MAX = 60
+const SLIDER_STEP = 1
+
+function getBestPack(hours: number): { pack: HourPack | null; cost: number; savings: number } {
+  const paygCost = hours * PAYG_RATE
+
+  // Find the cheapest option
+  let bestPack: HourPack | null = null
+  let bestCost = paygCost
+
+  for (const pack of HOUR_PACKS) {
+    if (hours <= pack.hours) {
+      if (pack.price < bestCost) {
+        bestCost = pack.price
+        bestPack = pack
+      }
+    } else {
+      // Hours exceed pack - add extra at pack rate
+      const extra = hours - pack.hours
+      const totalCost = pack.price + extra * pack.perHour
+      if (totalCost < bestCost) {
+        bestCost = totalCost
+        bestPack = pack
+      }
+    }
+  }
+
+  return {
+    pack: bestPack,
+    cost: bestCost,
+    savings: paygCost - bestCost,
+  }
 }
 
-const PLANS: ContinuousPlan[] = [
-  {
-    tier: 'SILVER',
-    name: 'Your DevOps Safety Net',
-    tagline: 'For teams that need reliable infrastructure support without a full-time hire.',
-    basePrice: '$2,500',
-    pctLabel: '+ 3% of cloud spend',
-    hours: '~15 hrs/month',
-    sla: '4-hour response (business hours)',
-    comms: 'Shared Slack · Monthly sync · Monthly report',
-    features: [
-      'CI/CD pipeline maintenance',
-      'Basic monitoring & alerting',
-      'Monthly infrastructure review',
-      'Cloud spend visibility dashboard',
-      'Slack support (business hours)',
-      'Incident response (business hours)',
-    ],
-    excluded: [
-      'IaC management (Terraform/Pulumi)',
-      'Kubernetes cluster management',
-      'Cloud cost optimization sprints',
-      'Security hardening & compliance',
-    ],
-    example: "Your infra costs $20K → you pay $2K. That's it.",
-    cta: 'Start with Free Audit',
-    featured: false,
-  },
-  {
-    tier: 'GOLD',
-    name: 'Your Embedded DevOps Team',
-    tagline: 'For growing teams that need a full infrastructure partner.',
-    basePrice: '$5,000',
-    pctLabel: '+ 5% of cloud spend',
-    hours: '~35 hrs/month',
-    sla: '2-hour response · After-hours P0/P1 on-call',
-    comms: 'Shared Slack · Weekly sync · Weekly reports · Quarterly business review',
-    featured: true,
-    features: [
-      'Everything in Silver, plus:',
-      'Full IaC management (Terraform/Pulumi)',
-      'Kubernetes cluster management (dev + prod)',
-      'Cloud cost optimization (quarterly sprints)',
-      'Security hardening & patch management',
-      'Extended-hours Slack support',
-      'Architecture advisory (2 hrs/mo)',
-    ],
-    excluded: [
-      'Major migrations (billed separately)',
-      'SOC 2 / HIPAA compliance (billed separately)',
-      '24/7 NOC-style coverage',
-    ],
-    example: 'Server bill is $5K/mo → you pay $500/mo. Scales with you.',
-    cta: 'Book a Free Call →',
-  },
-]
-
-/* --- Cloud Spend Calculator examples --- */
-const SPEND_EXAMPLES = [
-  { spend: '$10K', silver: '$2,800', gold: '$5,500' },
-  { spend: '$25K', silver: '$3,250', gold: '$6,250' },
-  { spend: '$50K', silver: '$4,000', gold: '$7,500' },
-  { spend: '$100K', silver: '$5,500', gold: '$10,000' },
-]
-
 export default function Pricing() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-  const [hoveredPlan, setHoveredPlan] = useState<number | null>(null)
+  const [hoveredPack, setHoveredPack] = useState<number | null>(null)
   const [hoveredBtn, setHoveredBtn] = useState<number | null>(null)
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [hoveredOTBtn, setHoveredOTBtn] = useState<number | null>(null)
+  const [neededHours, setNeededHours] = useState(15)
+
+  const calcResult = useMemo(() => getBestPack(neededHours), [neededHours])
+  const paygTotal = neededHours * PAYG_RATE
+  const fullTimeHireCost = 15000
 
   return (
     <section
@@ -191,7 +224,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Transparent Pricing
+            Truly Fractional Pricing
           </p>
         </Reveal>
 
@@ -205,7 +238,7 @@ export default function Pricing() {
               marginBottom: 16,
             }}
           >
-            Two ways to work with us.
+            Buy hours, not headcount.
           </h2>
         </Reveal>
 
@@ -219,13 +252,439 @@ export default function Pricing() {
               lineHeight: 1.6,
             }}
           >
-            Start with a one-time project. Stay for the partnership. No lock-in, no surprises.
+            Senior DevOps engineers at a per-hour rate. No retainers, no cloud-spend
+            percentages, no hidden fees. Use only what you need.
           </p>
         </Reveal>
 
-        {/* ----------------------------------------------- */}
-        {/* SECTION A -- One-Time Engagements               */}
-        {/* ----------------------------------------------- */}
+        {/* ============================================= */}
+        {/* SECTION A - Hour Packs                        */}
+        {/* ============================================= */}
+
+        {/* --- Interactive Hours Calculator --- */}
+        <Reveal delay={200}>
+          <div
+            style={{
+              background: `linear-gradient(135deg, ${COLORS.accentDim} 0%, ${COLORS.purpleDim} 100%)`,
+              border: '1px solid rgba(0,229,160,0.12)',
+              borderRadius: 16,
+              padding: '32px 36px',
+              marginBottom: 40,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 16,
+                marginBottom: 20,
+              }}
+            >
+              <div>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.65rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    color: COLORS.textMuted,
+                    marginBottom: 6,
+                  }}
+                >
+                  Hours you need per month
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '2rem',
+                    fontWeight: 700,
+                    color: COLORS.text,
+                  }}
+                >
+                  {neededHours}<span style={{ fontSize: '0.85rem', color: COLORS.textMuted }}> hrs/mo</span>
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 32,
+                  flexWrap: 'wrap',
+                }}
+              >
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', color: COLORS.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Best option</p>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '1.5rem', fontWeight: 700, color: COLORS.accent }}>
+                    ${calcResult.cost.toLocaleString()}<span style={{ fontSize: '0.7rem' }}>/mo</span>
+                  </p>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', color: COLORS.accent, marginTop: 2 }}>
+                    {calcResult.pack ? `${calcResult.pack.name} Pack` : 'Pay As You Go'}
+                  </p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', color: COLORS.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Pay-as-you-go</p>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '1.5rem', fontWeight: 700, color: COLORS.textSoft }}>
+                    ${paygTotal.toLocaleString()}<span style={{ fontSize: '0.7rem' }}>/mo</span>
+                  </p>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', color: COLORS.textMuted, marginTop: 2 }}>
+                    ${PAYG_RATE}/hr
+                  </p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.6rem', color: COLORS.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Full-time hire</p>
+                  <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '1.5rem', fontWeight: 700, color: COLORS.textMuted, textDecoration: 'line-through' }}>
+                    ${fullTimeHireCost.toLocaleString()}<span style={{ fontSize: '0.7rem' }}>/mo</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <input
+              type="range"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_STEP}
+              value={neededHours}
+              onChange={(e) => setNeededHours(Number(e.target.value))}
+              style={{ width: '100%' }}
+            />
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: 8,
+              }}
+            >
+              <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: COLORS.textMuted }}>{SLIDER_MIN} hr</span>
+              <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: COLORS.textMuted }}>{SLIDER_MAX} hrs</span>
+            </div>
+
+            {calcResult.savings > 0 && (
+              <p
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '0.75rem',
+                  color: COLORS.accent,
+                  marginTop: 16,
+                  textAlign: 'center',
+                }}
+              >
+                You save ${calcResult.savings.toLocaleString()}/mo with {calcResult.pack?.name} vs pay-as-you-go
+              </p>
+            )}
+          </div>
+        </Reveal>
+
+        {/* --- Pay As You Go callout --- */}
+        <Reveal delay={220}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 16,
+              background: COLORS.bgCard,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: 14,
+              padding: '24px 28px',
+              marginBottom: 24,
+            }}
+          >
+            <div>
+              <p
+                style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '0.6rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: COLORS.warm,
+                  marginBottom: 6,
+                }}
+              >
+                No commitment needed
+              </p>
+              <p style={{ fontSize: '1rem', color: COLORS.text, fontWeight: 600 }}>
+                Pay As You Go
+              </p>
+              <p style={{ fontSize: '0.85rem', color: COLORS.textSoft, marginTop: 4 }}>
+                ${PAYG_RATE}/hr for ad-hoc tasks. No monthly fee. No minimum. Perfect for one-off fixes.
+              </p>
+            </div>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                padding: '12px 24px',
+                borderRadius: 8,
+                border: `1px solid ${COLORS.borderHover}`,
+                color: COLORS.textSoft,
+                transition: 'all 0.25s ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Book a Call
+            </a>
+          </div>
+        </Reveal>
+
+        {/* --- Pack Cards --- */}
+        <div
+          className="packs-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 20,
+            marginBottom: 96,
+          }}
+        >
+          {HOUR_PACKS.map((pack, i) => (
+            <Reveal key={pack.name} delay={260 + i * 120}>
+              <div
+                onMouseEnter={() => setHoveredPack(i)}
+                onMouseLeave={() => setHoveredPack(null)}
+                style={{
+                  position: 'relative',
+                  background: pack.recommended
+                    ? `linear-gradient(180deg, ${COLORS.accentDim} 0%, ${COLORS.bgCard} 40%)`
+                    : COLORS.bgCard,
+                  border: `1px solid ${pack.recommended ? 'rgba(0,229,160,0.25)' : COLORS.border}`,
+                  borderRadius: 14,
+                  padding: '40px 28px',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 0.3s ease',
+                  transform: hoveredPack === i ? 'translateY(-4px)' : 'translateY(0)',
+                  boxShadow: pack.recommended && hoveredPack === i
+                    ? '0 8px 40px rgba(0,229,160,0.08)'
+                    : 'none',
+                }}
+              >
+                {/* Badge */}
+                {pack.recommended && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: -11,
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: COLORS.accent,
+                      color: '#06080a',
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.6rem',
+                      fontWeight: 800,
+                      padding: '4px 14px',
+                      borderRadius: 100,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    MOST POPULAR
+                  </span>
+                )}
+
+                {/* Pack name */}
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    color: COLORS.textMuted,
+                    letterSpacing: '0.12em',
+                    marginBottom: 4,
+                  }}
+                >
+                  {pack.name}
+                </p>
+
+                {/* Hours */}
+                <h3
+                  style={{
+                    fontFamily: "'Newsreader', serif",
+                    fontSize: '1.5rem',
+                    fontWeight: 400,
+                    color: COLORS.text,
+                    marginBottom: 6,
+                  }}
+                >
+                  {pack.hours} hours / month
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: '0.85rem',
+                    color: COLORS.textSoft,
+                    marginBottom: 20,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {pack.tagline}
+                </p>
+
+                {/* Price */}
+                <div style={{ marginBottom: 6 }}>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '2.2rem',
+                      fontWeight: 700,
+                      color: COLORS.text,
+                    }}
+                  >
+                    ${pack.price}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.85rem',
+                      color: COLORS.textMuted,
+                    }}
+                  >
+                    /mo
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.8rem',
+                    color: COLORS.accent,
+                    marginBottom: 4,
+                  }}
+                >
+                  ${pack.perHour}/hr effective rate
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.7rem',
+                    color: COLORS.textMuted,
+                    marginBottom: 16,
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Extra hours at ${pack.perHour}/hr
+                </p>
+
+                {/* Meta */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 8,
+                    marginBottom: 20,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.65rem',
+                      color: COLORS.textMuted,
+                      background: COLORS.surface,
+                      padding: '3px 10px',
+                      borderRadius: 4,
+                    }}
+                  >
+                    {pack.sla}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    borderTop: `1px solid ${COLORS.border}`,
+                    margin: '0 0 20px',
+                  }}
+                />
+
+                {/* Features */}
+                <p
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    fontSize: '0.6rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    color: COLORS.accent,
+                    marginBottom: 12,
+                  }}
+                >
+                  Included
+                </p>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', flex: 1 }}>
+                  {pack.features.map((f) => (
+                    <li
+                      key={f}
+                      style={{
+                        fontSize: '0.85rem',
+                        color: COLORS.textSoft,
+                        lineHeight: 2,
+                      }}
+                    >
+                      <span style={{ color: COLORS.accent, marginRight: 8, fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.7rem' }}>&#x2713;</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <a
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setHoveredBtn(i)}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    fontWeight: pack.recommended ? 700 : 600,
+                    fontSize: '0.95rem',
+                    padding: '14px 0',
+                    width: '100%',
+                    borderRadius: 10,
+                    cursor: 'pointer',
+                    transition: 'all 0.25s ease',
+                    ...(pack.recommended
+                      ? {
+                          background: COLORS.accent,
+                          color: '#06080a',
+                          border: 'none',
+                          boxShadow:
+                            hoveredBtn === i
+                              ? '0 0 30px rgba(0,229,160,0.25)'
+                              : 'none',
+                        }
+                      : {
+                          background: 'transparent',
+                          border: `1px solid ${
+                            hoveredBtn === i ? COLORS.accent : COLORS.borderHover
+                          }`,
+                          color:
+                            hoveredBtn === i ? COLORS.accent : COLORS.textSoft,
+                        }),
+                  }}
+                >
+                  {pack.cta}
+                </a>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* ============================================= */}
+        {/* SECTION B - One-Time Engagements              */}
+        {/* ============================================= */}
         <Reveal delay={200}>
           <h3
             style={{
@@ -236,7 +695,7 @@ export default function Pricing() {
               marginBottom: 8,
             }}
           >
-            Start with a quick win.
+            Or start with a one-time project.
           </h3>
           <p
             style={{
@@ -246,7 +705,7 @@ export default function Pricing() {
               lineHeight: 1.6,
             }}
           >
-            Fixed-price projects with clear deliverables. No retainer commitment required.
+            Fixed-price engagements with clear deliverables. No retainer required.
           </p>
         </Reveal>
 
@@ -254,13 +713,12 @@ export default function Pricing() {
           className="ot-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
             gap: 16,
-            marginBottom: 96,
           }}
         >
           {ONE_TIME_SERVICES.map((svc, i) => (
-            <Reveal key={svc.title} delay={240 + i * 80}>
+            <Reveal key={svc.title} delay={240 + i * 70}>
               <div
                 onMouseEnter={() => setHoveredCard(i)}
                 onMouseLeave={() => setHoveredCard(null)}
@@ -273,9 +731,27 @@ export default function Pricing() {
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'all 0.3s ease',
-                  transform: hoveredCard === i ? 'translateY(-3px)' : 'translateY(0)',
+                  transform: hoveredCard === i ? 'translateY(-4px)' : 'translateY(0)',
+                  position: 'relative',
+                  overflow: 'hidden',
                 }}
               >
+                {/* Accent top bar */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    background: svc.tagColor
+                      ? `linear-gradient(90deg, transparent, ${svc.tagColor}, transparent)`
+                      : `linear-gradient(90deg, transparent, ${COLORS.border}, transparent)`,
+                    opacity: hoveredCard === i ? 1 : 0.4,
+                    transition: 'opacity 0.3s ease',
+                  }}
+                />
+
                 {/* Tag */}
                 {svc.tag && (
                   <span
@@ -285,7 +761,7 @@ export default function Pricing() {
                       fontWeight: 700,
                       textTransform: 'uppercase',
                       letterSpacing: '0.1em',
-                      color: svc.tag === 'High ROI' ? COLORS.warm : COLORS.accent,
+                      color: svc.tagColor || COLORS.accent,
                       marginBottom: 12,
                     }}
                   >
@@ -322,9 +798,12 @@ export default function Pricing() {
                   <span
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.75rem',
+                      fontSize: '0.7rem',
                       color: COLORS.textMuted,
                       marginLeft: 10,
+                      background: COLORS.surface,
+                      padding: '2px 8px',
+                      borderRadius: 4,
                     }}
                   >
                     {svc.duration}
@@ -354,9 +833,10 @@ export default function Pricing() {
                           fontFamily: "'IBM Plex Mono', monospace",
                           color: COLORS.accent,
                           marginRight: 8,
+                          fontSize: '0.7rem',
                         }}
                       >
-                        &rarr;
+                        &#x2713;
                       </span>
                       {b}
                     </li>
@@ -365,7 +845,7 @@ export default function Pricing() {
 
                 {/* CTA */}
                 <a
-                  href="https://calendly.com/connect-cloudsaathi/30min"
+                  href={CALENDLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredOTBtn(i)}
@@ -394,432 +874,8 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* ----------------------------------------------- */}
-        {/* SECTION B -- Continuous Plans (Silver | Gold)    */}
-        {/* ----------------------------------------------- */}
-        <Reveal delay={200}>
-          <h3
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '1.25rem',
-              fontWeight: 700,
-              color: COLORS.text,
-              marginBottom: 8,
-            }}
-          >
-            Scale with a partner, not a vendor.
-          </h3>
-          <p
-            style={{
-              fontSize: '0.95rem',
-              color: COLORS.textSoft,
-              marginBottom: 32,
-              lineHeight: 1.6,
-            }}
-          >
-            Month-to-month. No lock-in. Pause or cancel anytime.
-          </p>
-        </Reveal>
-
-        <div
-          className="plans-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {PLANS.map((plan, i) => (
-            <Reveal key={plan.tier} delay={240 + i * 120}>
-              <div
-                onMouseEnter={() => setHoveredPlan(i)}
-                onMouseLeave={() => setHoveredPlan(null)}
-                style={{
-                  position: 'relative',
-                  background: plan.featured
-                    ? `linear-gradient(180deg, ${COLORS.accentDim} 0%, ${COLORS.bgCard} 40%)`
-                    : COLORS.bgCard,
-                  border: `1px solid ${plan.featured ? COLORS.accent : COLORS.border}`,
-                  borderRadius: 14,
-                  padding: '40px 32px',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'all 0.3s ease',
-                  transform: hoveredPlan === i ? 'translateY(-3px)' : 'translateY(0)',
-                }}
-              >
-                {/* Badge */}
-                {plan.featured && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -11,
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      background: COLORS.accent,
-                      color: '#06080a',
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.6rem',
-                      fontWeight: 800,
-                      padding: '4px 14px',
-                      borderRadius: 100,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    RECOMMENDED
-                  </span>
-                )}
-
-                {/* Tier label */}
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    color: COLORS.textMuted,
-                    letterSpacing: '0.12em',
-                    marginBottom: 4,
-                  }}
-                >
-                  {plan.tier}
-                </p>
-
-                {/* Plan name */}
-                <h3
-                  style={{
-                    fontFamily: "'Newsreader', serif",
-                    fontSize: '1.5rem',
-                    fontWeight: 400,
-                    color: COLORS.text,
-                    marginBottom: 6,
-                  }}
-                >
-                  {plan.name}
-                </h3>
-
-                <p
-                  style={{
-                    fontSize: '0.85rem',
-                    color: COLORS.textSoft,
-                    marginBottom: 20,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {plan.tagline}
-                </p>
-
-                {/* Pricing formula */}
-                <div style={{ marginBottom: 6 }}>
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '2rem',
-                      fontWeight: 700,
-                      color: COLORS.text,
-                    }}
-                  >
-                    {plan.basePrice}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.85rem',
-                      color: COLORS.textMuted,
-                    }}
-                  >
-                    /mo
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.8rem',
-                    color: COLORS.accent,
-                    marginBottom: 8,
-                  }}
-                >
-                  {plan.pctLabel}
-                </p>
-
-                {/* Hours & SLA */}
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: 16,
-                    flexWrap: 'wrap',
-                    marginBottom: 6,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: '0.7rem',
-                      color: COLORS.textMuted,
-                    }}
-                  >
-                    {plan.hours}
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.7rem',
-                    color: COLORS.textMuted,
-                    marginBottom: 4,
-                  }}
-                >
-                  SLA: {plan.sla}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.7rem',
-                    color: COLORS.textMuted,
-                    marginBottom: 20,
-                  }}
-                >
-                  {plan.comms}
-                </p>
-
-                <div
-                  style={{
-                    borderTop: `1px solid ${COLORS.border}`,
-                    margin: '0 0 20px',
-                  }}
-                />
-
-                {/* Included features */}
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.6rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: COLORS.accent,
-                    marginBottom: 12,
-                  }}
-                >
-                  Included
-                </p>
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: '0 0 20px',
-                  }}
-                >
-                  {plan.features.map((f) => (
-                    <li
-                      key={f}
-                      style={{
-                        fontSize: '0.85rem',
-                        color: COLORS.textSoft,
-                        lineHeight: 2,
-                      }}
-                    >
-                      <span
-                        style={{
-                          color: COLORS.accent,
-                          marginRight: 8,
-                          fontFamily: "'IBM Plex Mono', monospace",
-                        }}
-                      >
-                        &#x2713;
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Not included */}
-                <p
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '0.6rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: COLORS.textMuted,
-                    marginBottom: 12,
-                  }}
-                >
-                  Not Included
-                </p>
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: '0 0 24px',
-                    flex: 1,
-                  }}
-                >
-                  {plan.excluded.map((f) => (
-                    <li
-                      key={f}
-                      style={{
-                        fontSize: '0.82rem',
-                        color: COLORS.textMuted,
-                        lineHeight: 2,
-                      }}
-                    >
-                      <span
-                        style={{
-                          marginRight: 8,
-                          fontFamily: "'IBM Plex Mono', monospace",
-                        }}
-                      >
-                        &mdash;
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA button */}
-                <a
-                  href="https://calendly.com/connect-cloudsaathi/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={() => setHoveredBtn(i)}
-                  onMouseLeave={() => setHoveredBtn(null)}
-                  style={{
-                    display: 'block',
-                    textAlign: 'center',
-                    textDecoration: 'none',
-                    fontWeight: plan.featured ? 700 : 600,
-                    fontSize: '0.95rem',
-                    padding: '14px 0',
-                    width: '100%',
-                    borderRadius: 10,
-                    cursor: 'pointer',
-                    transition: 'all 0.25s ease',
-                    ...(plan.featured
-                      ? {
-                          background: COLORS.accent,
-                          color: '#06080a',
-                          border: 'none',
-                          boxShadow:
-                            hoveredBtn === i
-                              ? '0 0 30px rgba(0,229,160,0.25)'
-                              : 'none',
-                        }
-                      : {
-                          background: 'transparent',
-                          border: `1px solid ${
-                            hoveredBtn === i ? COLORS.accent : COLORS.borderHover
-                          }`,
-                          color:
-                            hoveredBtn === i ? COLORS.accent : COLORS.textSoft,
-                        }),
-                  }}
-                >
-                  {plan.featured ? 'Start with Free Audit \u2192' : 'Start with Free Audit'}
-                </a>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* --- Effective cost examples --- */}
-        <Reveal delay={480}>
-          <div
-            style={{
-              marginTop: 48,
-              background: COLORS.bgCard,
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: 14,
-              padding: '28px 32px',
-              overflowX: 'auto',
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '0.7rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: COLORS.textMuted,
-                marginBottom: 16,
-              }}
-            >
-              What you actually pay &mdash; by cloud spend
-            </p>
-
-            <table
-              style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: '0.85rem',
-              }}
-            >
-              <thead>
-                <tr>
-                  {['Cloud Spend/mo', 'Silver', 'Gold'].map((h) => (
-                    <th
-                      key={h}
-                      style={{
-                        textAlign: 'left',
-                        padding: '8px 16px 8px 0',
-                        color: COLORS.textMuted,
-                        fontWeight: 600,
-                        fontSize: '0.75rem',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        borderBottom: `1px solid ${COLORS.border}`,
-                      }}
-                    >
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {SPEND_EXAMPLES.map((row) => (
-                  <tr key={row.spend}>
-                    <td
-                      style={{
-                        padding: '10px 16px 10px 0',
-                        color: COLORS.textSoft,
-                        borderBottom: `1px solid ${COLORS.border}`,
-                      }}
-                    >
-                      {row.spend}
-                    </td>
-                    <td
-                      style={{
-                        padding: '10px 16px 10px 0',
-                        color: COLORS.textSoft,
-                        borderBottom: `1px solid ${COLORS.border}`,
-                      }}
-                    >
-                      {row.silver}/mo
-                    </td>
-                    <td
-                      style={{
-                        padding: '10px 16px 10px 0',
-                        color: COLORS.accent,
-                        fontWeight: 600,
-                        borderBottom: `1px solid ${COLORS.border}`,
-                      }}
-                    >
-                      {row.gold}/mo
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Reveal>
-
         {/* --- Bottom note --- */}
-        <Reveal delay={560}>
+        <Reveal delay={520}>
           <p
             style={{
               textAlign: 'center',
@@ -832,26 +888,24 @@ export default function Pricing() {
               marginRight: 'auto',
             }}
           >
-            All plans month-to-month. The cloud spend percentage ensures we scale with
-            you&thinsp;&mdash;&thinsp;as your infrastructure grows, so does our investment in your
-            success. Not sure which fits?{' '}
+            All packs are month-to-month. Unused hours roll over for 1 month.
+            No cloud-spend percentages, no hidden fees. Need a custom scope?{' '}
             <a
-              href="https://calendly.com/connect-cloudsaathi/30min"
+              href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: COLORS.accent, textDecoration: 'none' }}
             >
-              Start with a free audit
+              Let's talk
             </a>
             .
           </p>
         </Reveal>
       </div>
 
-      {/* Responsive */}
       <style>{`
         @media (max-width: 720px) {
-          .ot-grid, .plans-grid {
+          .ot-grid, .packs-grid {
             grid-template-columns: 1fr !important;
           }
         }

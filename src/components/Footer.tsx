@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { COLORS } from '../constants'
+import { COLORS, CALENDLY_URL, EMAIL } from '../constants'
 
 interface FooterLink {
   label: string
@@ -25,9 +25,9 @@ const COLUMNS: LinkColumn[] = [
   {
     header: 'Pricing',
     links: [
-      { label: 'One-Time Engagements', href: '#pricing' },
-      { label: 'Silver Plan', href: '#pricing' },
-      { label: 'Gold Plan', href: '#pricing' },
+      { label: 'Hour Packs', href: '#pricing' },
+      { label: 'Pay As You Go', href: '#pricing' },
+      { label: 'One-Time Projects', href: '#pricing' },
       { label: 'Free Audit', href: '#audit' },
     ],
   },
@@ -42,10 +42,10 @@ const COLUMNS: LinkColumn[] = [
   {
     header: 'Connect',
     links: [
-      { label: 'connect@cloudsaathi.com', href: 'mailto:connect@cloudsaathi.com' },
+      { label: EMAIL, href: `mailto:${EMAIL}` },
       {
         label: 'Calendly',
-        href: 'https://calendly.com/connect-cloudsaathi/30min',
+        href: CALENDLY_URL,
         external: true,
       },
       {
@@ -112,7 +112,7 @@ export default function Footer() {
                 lineHeight: 1.5,
               }}
             >
-              DevOps-as-a-Service for startups that ship. From $2,500/mo.
+              Fractional DevOps for startups that ship. From $29/hr.
             </p>
           </div>
 

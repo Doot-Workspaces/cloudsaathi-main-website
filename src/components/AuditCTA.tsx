@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { COLORS } from '../constants'
+import { COLORS, CALENDLY_URL } from '../constants'
 import Reveal from './Reveal'
 
 const CHIPS = [
@@ -99,7 +99,7 @@ export default function AuditCTA() {
 
           {/* CTA Button */}
           <a
-            href="https://calendly.com/connect-cloudsaathi/30min"
+            href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={() => setBtnHovered(true)}
