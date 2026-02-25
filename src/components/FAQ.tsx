@@ -6,32 +6,32 @@ const FAQ_ITEMS = [
   {
     question: 'How is this different from an Upwork freelancer?',
     answer:
-      'Freelancers are task-executors. We\u2019re a structured DevOps practice: discovery, audit, roadmap, execution, ongoing support. You get process, documentation, and knowledge transfer \u2014 not just someone running commands.',
+      'Freelancers are task-executors. We are a structured DevOps practice: discovery, audit, roadmap, execution, ongoing support. You get process, documentation, and knowledge transfer - not just someone running commands.',
   },
   {
-    question: 'What does the cloud spend percentage cover?',
+    question: 'How does the hour-pack pricing work?',
     answer:
-      'The percentage component ensures we scale with you. As your infrastructure grows, so does the complexity we manage. The flat base covers our operational cost; the percentage ensures we\u2019re investing proportionally in your success. For example, at $30K/mo cloud spend, Silver is $3,400/mo and Gold is $6,500/mo.',
+      'You buy a pack of DevOps hours each month. Starter is 5 hrs at $149/mo ($29/hr), Growth is 15 hrs at $399/mo ($26/hr), and Scale is 40 hrs at $899/mo ($22/hr). Extra hours are billed at your pack rate. Unused hours roll over for 1 month. No cloud-spend percentages, no hidden fees.',
   },
   {
-    question: 'Can I switch plans?',
+    question: 'Can I switch packs or cancel?',
     answer:
-      'Yes. All plans are month-to-month. You can upgrade from Silver to Gold anytime, or start with a one-time engagement and move to a retainer later. No penalties, no lock-in.',
+      'Yes. All packs are month-to-month. You can upgrade, downgrade, or cancel anytime with 30-day notice. You can also start with pay-as-you-go ($49/hr) and switch to a pack later when you see the value.',
   },
   {
-    question: 'What happens if my cloud spend changes?',
+    question: 'What if I need more hours than my pack?',
     answer:
-      'Your monthly fee adjusts automatically. If your cloud bill drops (because we optimized it), the percentage component decreases. The flat base stays the same, so we\u2019re never penalized for doing our job well.',
+      'Extra hours are billed at your pack rate - $29/hr for Starter, $26/hr for Growth, $22/hr for Scale. No surprise markups. We will always notify you before exceeding your pack so you stay in control.',
   },
   {
     question: 'Is there a minimum commitment?',
     answer:
-      'No long-term commitment required. Plans are month-to-month with 30-day notice to cancel. We also offer a 2-week free trial on Silver and Gold plans so you can evaluate the fit risk-free.',
+      'No. You can start with pay-as-you-go at $49/hr with zero monthly commitment. Or try a one-time engagement like our free mini-audit. All packs are month-to-month - cancel anytime.',
   },
   {
     question: 'What timezone do you operate in?',
     answer:
-      'We\u2019re based in IST with a 4\u20136 hour overlap with US East business hours. Gold plan includes after-hours on-call for P0/P1 incidents. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained around the clock.',
+      'We are based in IST with a 4-6 hour overlap with US East business hours. Scale pack includes after-hours on-call for P0/P1 incidents. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained around the clock.',
   },
   {
     question: 'Do you embed with our team?',
@@ -41,7 +41,7 @@ const FAQ_ITEMS = [
   {
     question: 'How fast can you start?',
     answer:
-      'Typical onboarding is 3\u20135 business days. For urgent production issues, we can start within 48 hours. Every engagement starts with a free 30-minute discovery call and a 1-page mini-audit.',
+      'Typical onboarding is 3-5 business days. For urgent production issues, we can start within 48 hours. Every engagement starts with a free 30-minute discovery call and a 1-page mini-audit.',
   },
 ]
 
