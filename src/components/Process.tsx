@@ -21,7 +21,7 @@ const steps = [
     number: '03',
     title: 'Proposal',
     description:
-      'Choose your path: a fixed-price one-time project, or a Silver/Gold retainer. Clear scope, deliverables, timelines.',
+      'Choose your path: pay-as-you-go, an hour pack, or a fixed-price project. Clear scope, deliverables, timelines.',
     duration: 'Day 4-5',
   },
   {

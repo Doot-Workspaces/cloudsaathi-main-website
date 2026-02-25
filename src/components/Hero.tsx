@@ -4,10 +4,10 @@ import Reveal from './Reveal'
 import Terminal from './Terminal'
 
 const PROOF_POINTS = [
-  { value: '30-40%', label: 'Avg cloud cost saved' },
-  { value: '3x', label: 'Faster deploys' },
+  { value: '$149', label: 'Starting from /mo' },
+  { value: '$29', label: 'Per hour' },
   { value: '2-hr', label: 'Incident response SLA' },
-  { value: '$499', label: 'Starting from /mo' },
+  { value: '0%', label: 'Hidden fees' },
 ]
 
 export default function Hero() {
@@ -150,9 +150,9 @@ export default function Hero() {
               }}
             >
               Senior DevOps engineers embedded in your team. CI/CD, Kubernetes,
-              Terraform, cloud cost optimization - from{' '}
-              <strong style={{ color: COLORS.accent, fontWeight: 700 }}>$499/mo</strong>,
-              a fraction of a full-time hire.
+              Terraform, cloud cost optimization - from just{' '}
+              <strong style={{ color: COLORS.accent, fontWeight: 700 }}>$29/hr</strong>.
+              Buy hours, not headcount.
             </p>
 
             {/* Buttons */}
