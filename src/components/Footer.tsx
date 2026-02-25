@@ -112,7 +112,7 @@ export default function Footer() {
                 lineHeight: 1.5,
               }}
             >
-              DevOps-as-a-Service for startups that ship. From $999/mo.
+              DevOps-as-a-Service for startups that ship. From $499/mo.
             </p>
           </div>
 

@@ -15,31 +15,31 @@ interface OneTimeService {
 const ONE_TIME_SERVICES: OneTimeService[] = [
   {
     title: 'Infrastructure Audit',
-    price: '$499 - $1,999',
+    price: 'FREE - $499',
     duration: '3-5 days',
     bullets: [
-      '5 quick wins + 5 strategic recommendations',
-      'Risk heatmap & cloud spend analysis',
-      'Upsell-free written report',
+      'Free mini-audit: 3 quick wins (30-min call)',
+      'Full audit: risk heatmap + spend analysis',
+      'Written report with actionable roadmap',
     ],
     tag: 'Start Here',
     tagColor: COLORS.accent,
   },
   {
     title: 'Cloud Cost Optimization',
-    price: '15% of savings or $1,999 - $4,999',
+    price: '15% of savings or $999 - $2,499',
     duration: '2-4 weeks',
     bullets: [
       'Rightsizing, RI/SP, idle cleanup',
       'Min $5K/mo cloud spend',
-      'Min fee $999 (floor)',
+      'You keep 85% of savings found',
     ],
     tag: 'High ROI',
     tagColor: COLORS.warm,
   },
   {
     title: 'Cloud Migration',
-    price: '$2,999 - $9,999',
+    price: '$1,499 - $4,999',
     duration: '4-12 weeks',
     bullets: [
       'On-prem to AWS/GCP, cloud-to-cloud',
@@ -49,7 +49,7 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Infra Upgrade & Modernization',
-    price: '$1,999 - $5,999',
+    price: '$999 - $2,999',
     duration: '2-6 weeks',
     bullets: [
       'CI/CD overhaul (GitHub Actions, GitLab CI)',
@@ -59,7 +59,7 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Security & Compliance',
-    price: '$1,999 - $4,999',
+    price: '$999 - $2,499',
     duration: '2-4 weeks',
     bullets: [
       'SOC 2, HIPAA, PCI-DSS readiness',
@@ -71,7 +71,7 @@ const ONE_TIME_SERVICES: OneTimeService[] = [
   },
   {
     title: 'Architecture Review',
-    price: '$999 - $2,499',
+    price: '$499 - $999',
     duration: '1-2 weeks',
     bullets: [
       'Well-Architected Framework assessment',
@@ -104,10 +104,10 @@ const PLANS: ContinuousPlan[] = [
     tier: 'SILVER',
     name: 'Your DevOps Safety Net',
     tagline: 'Reliable infrastructure support without a full-time hire.',
-    basePrice: 999,
+    basePrice: 499,
     pctRate: 0.02,
     pctLabel: '+ 2% of cloud spend',
-    hours: '~12 hrs/month',
+    hours: '~8 hrs/month',
     sla: '4-hour response (business hours)',
     comms: 'Shared Slack / Monthly sync / Monthly report',
     features: [
@@ -124,7 +124,7 @@ const PLANS: ContinuousPlan[] = [
       'Cloud cost optimization sprints',
       'Security hardening & compliance',
     ],
-    example: "$10K cloud spend = $1,199/mo total",
+    example: "$10K cloud spend = $699/mo total",
     cta: 'Start with Free Audit',
     featured: false,
   },
@@ -132,10 +132,10 @@ const PLANS: ContinuousPlan[] = [
     tier: 'GOLD',
     name: 'Your Embedded DevOps Team',
     tagline: 'A full infrastructure partner that scales with you.',
-    basePrice: 2499,
-    pctRate: 0.04,
-    pctLabel: '+ 4% of cloud spend',
-    hours: '~30 hrs/month',
+    basePrice: 999,
+    pctRate: 0.03,
+    pctLabel: '+ 3% of cloud spend',
+    hours: '~20 hrs/month',
     sla: '2-hour response / After-hours P0/P1 on-call',
     comms: 'Shared Slack / Weekly sync / Weekly reports / Quarterly review',
     featured: true,
@@ -153,7 +153,7 @@ const PLANS: ContinuousPlan[] = [
       'SOC 2 / HIPAA compliance (billed separately)',
       '24/7 NOC-style coverage',
     ],
-    example: "$25K cloud spend = $3,499/mo total",
+    example: "$20K cloud spend = $1,599/mo total",
     cta: 'Start with Free Audit',
   },
 ]

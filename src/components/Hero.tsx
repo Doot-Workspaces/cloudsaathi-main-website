@@ -7,7 +7,7 @@ const PROOF_POINTS = [
   { value: '30-40%', label: 'Avg cloud cost saved' },
   { value: '3x', label: 'Faster deploys' },
   { value: '2-hr', label: 'Incident response SLA' },
-  { value: '$999', label: 'Starting from /mo' },
+  { value: '$499', label: 'Starting from /mo' },
 ]
 
 export default function Hero() {
@@ -151,7 +151,7 @@ export default function Hero() {
             >
               Senior DevOps engineers embedded in your team. CI/CD, Kubernetes,
               Terraform, cloud cost optimization - from{' '}
-              <strong style={{ color: COLORS.accent, fontWeight: 700 }}>$999/mo</strong>,
+              <strong style={{ color: COLORS.accent, fontWeight: 700 }}>$499/mo</strong>,
               a fraction of a full-time hire.
             </p>
 
