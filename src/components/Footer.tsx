@@ -112,7 +112,7 @@ export default function Footer() {
                 lineHeight: 1.5,
               }}
             >
-              Fractional DevOps for startups that ship. From $29/hr.
+              Fractional DevOps for startups that ship. Based in New Delhi, India.
             </p>
           </div>
 

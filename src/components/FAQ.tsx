@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   {
     question: 'What timezone do you operate in?',
     answer:
-      'We are based in IST with a 4-6 hour overlap with US East business hours. Scale pack includes after-hours on-call for P0/P1 incidents. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained around the clock.',
+      'We are based in New Delhi, India (IST) with a 4-6 hour overlap with US East business hours. Scale pack includes after-hours on-call for P0/P1 incidents. Infrastructure work runs 24/7, so your CI/CD pipelines and monitoring are maintained around the clock.',
   },
   {
     question: 'Do you embed with our team?',

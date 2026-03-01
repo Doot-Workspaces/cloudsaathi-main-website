@@ -189,7 +189,7 @@ function Footer() {
                 <span style={{ fontFamily: F.d, fontSize: 16, color: C.ink, fontWeight: 500 }}>cloud<span style={{ position: "relative", display: "inline-block" }}><span style={{ opacity: lh ? 0 : 1, transition: "opacity 0.4s" }}>saathi</span><span style={{ position: "absolute", left: 0, top: 0, opacity: lh ? 1 : 0, transition: "opacity 0.4s", fontFamily: F.dv, fontSize: 15, fontWeight: 500, color: C.green }}>साथी</span></span></span>
               </div>
             </NL>
-            <p style={{ fontFamily: F.b, fontSize: 11, color: C.inkM, maxWidth: 240, lineHeight: 1.6, fontWeight: 300 }}>AI-native infrastructure shaped with product thinking. India-based. Global clients.</p>
+            <p style={{ fontFamily: F.b, fontSize: 11, color: C.inkM, maxWidth: 240, lineHeight: 1.6, fontWeight: 300 }}>AI-native infrastructure shaped with product thinking. New Delhi, India. Global clients.</p>
             <p style={{ fontFamily: F.dv, fontSize: 11, color: C.warm, marginTop: 6, opacity: 0.5 }}>सूक्ष्मता · स्पष्टता · विस्तार</p>
           </div>
           <div style={{ display: "flex", gap: 36 }}>
