@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { C, F } from "./design";
 
 /* ═══════════════════════════════════════════════════════════════════
    CLOUDSAATHI — COMPLETE SITE v3
@@ -10,20 +13,8 @@ import { useState, useEffect, useRef, useCallback, createContext, useContext } f
    [CONNECT] — search this to add social/contact links
    ═══════════════════════════════════════════════════════════════════ */
 
-const fontUrl = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans+Devanagari:wght@300;400;500;600&display=swap";
-
-const C = {
-  bg: "#F5F1E8", bgW: "#FDFBF7", bgDark: "#0D0D14",
-  ink: "#1A1A24", inkS: "#4A4A58", inkM: "#8A8A96",
-  green: "#2D6A4F", greenL: "#E6EEEA", greenD: "#1B4332",
-  warm: "#C4956A", bdr: "#D4CBBB", red: "#B5574E", teal: "#5BB8A6",
-};
-const F = {
-  d: "'Playfair Display', Georgia, serif",
-  b: "'Outfit', system-ui, sans-serif",
-  m: "'IBM Plex Mono', 'Courier New', monospace",
-  dv: "'Noto Sans Devanagari', 'Outfit', sans-serif",
-};
+// C and F design constants imported from ./design
+// Fonts loaded from index.html <link> for better LCP
 const inr = (n) => "₹" + n.toLocaleString("en-IN");
 
 /* [CALENDLY] — REPLACE THIS WITH YOUR ACTUAL CALENDLY LINK */
@@ -42,14 +33,12 @@ function useNav() { return useContext(NavCtx); }
 
 // Internal nav link — onClick sets page state
 function NL({ to, children, style = {}, onMouseEnter, onMouseLeave }) {
-  const { go } = useNav();
   return (
-    <span role="button" tabIndex={0}
-      onClick={() => go(to)}
-      onKeyDown={(e) => { if (e.key === "Enter") go(to); }}
+    <Link to={to ? `/${to}` : '/'}
+      onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
       onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
-      style={{ cursor: "pointer", display: "inline-block", ...style }}
-    >{children}</span>
+      style={{ cursor: "pointer", display: "inline-block", textDecoration: "none", color: "inherit", ...style }}
+    >{children}</Link>
   );
 }
 
@@ -82,15 +71,15 @@ function DvH({ en, dv, style = {}, ds = {} }) {
 
 // CTA → Products page
 function BtnProducts({ label, dvLabel }) {
-  const { go } = useNav();
   const [h, setH] = useState(false);
   return (
-    <span role="button" tabIndex={0} onClick={() => go("products")}
+    <Link to="/products"
+      onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
       onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ fontFamily: F.m, padding: "12px 24px", fontSize: 12, borderRadius: 3, letterSpacing: 0.5, position: "relative", display: "inline-block", overflow: "hidden", transition: "all 0.3s", background: h ? C.greenD : C.green, color: C.bgW, cursor: "pointer" }}>
+      style={{ fontFamily: F.m, padding: "12px 24px", fontSize: 12, borderRadius: 3, letterSpacing: 0.5, position: "relative", display: "inline-block", overflow: "hidden", transition: "all 0.3s", background: h ? C.greenD : C.green, color: C.bgW, cursor: "pointer", textDecoration: "none" }}>
       <span style={{ opacity: h ? 0 : 1, transition: "opacity 0.35s" }}>{label}</span>
       <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: h ? 1 : 0, transition: "opacity 0.35s", fontFamily: F.dv, fontSize: 13, fontWeight: 500 }}>{dvLabel}</span>
-    </span>
+    </Link>
   );
 }
 
@@ -128,17 +117,17 @@ function SL({ text }) {
 
 // ─── NAV BAR ─────────────────────────────────────
 function NavLink({ en, dv, route, active }) {
-  const { go } = useNav();
   const [h, setH] = useState(false);
   return (
-    <span role="button" tabIndex={0} onClick={() => go(route)}
+    <Link to={`/${route}`}
+      onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
       onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ borderBottom: active ? `1px solid ${C.green}` : "none", paddingBottom: 2, cursor: "pointer", display: "inline-block" }}>
+      style={{ borderBottom: active ? `1px solid ${C.green}` : "none", paddingBottom: 2, cursor: "pointer", display: "inline-block", textDecoration: "none" }}>
       <span style={{ fontFamily: F.b, fontSize: 12.5, fontWeight: active ? 500 : 400, color: active ? C.green : C.inkS, position: "relative", display: "inline-block" }}>
         <span style={{ opacity: h ? 0 : 1, transition: "opacity 0.35s" }}>{en}</span>
         <span style={{ position: "absolute", left: 0, top: 0, opacity: h ? 1 : 0, transition: "opacity 0.35s", fontFamily: F.dv, fontSize: 13, fontWeight: 500, color: C.green, whiteSpace: "nowrap" }}>{dv}</span>
       </span>
-    </span>
+    </Link>
   );
 }
 
@@ -162,6 +151,7 @@ function Nav({ page }) {
           <NavLink en="Philosophy" dv="दर्शन" route="philosophy" active={page === "philosophy"} />
           <NavLink en="AI-Native" dv="बुद्धि" route="ai-native" active={page === "ai-native"} />
           <NavLink en="Products" dv="उत्पाद" route="products" active={page === "products"} />
+          <NavLink en="Services" dv="सेवाएं" route="services" active={page.startsWith("services")} />
           {/* begin_ → Products */}
           <NL to="products" onMouseEnter={() => setBeginH(true)} onMouseLeave={() => setBeginH(false)}
             style={{ fontFamily: F.m, fontSize: 11, fontWeight: 500, color: C.bgW, background: beginH ? C.greenD : C.green, padding: "7px 16px", borderRadius: 3, letterSpacing: 0.5, transition: "all 0.3s", position: "relative", overflow: "hidden" }}>
@@ -196,7 +186,7 @@ function Footer() {
             {/* Pages — internal nav */}
             <div>
               <p style={{ fontFamily: F.m, fontSize: 8, color: C.inkM, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Pages</p>
-              {[["Philosophy", "philosophy"], ["AI-Native", "ai-native"], ["Products & Pricing", "products"]].map(([label, route]) => (
+              {[["Philosophy", "philosophy"], ["AI-Native", "ai-native"], ["Products & Pricing", "products"], ["Services", "services"], ["About", "about"], ["Contact", "contact"]].map(([label, route]) => (
                 <NL key={route} to={route} style={{ fontFamily: F.b, fontSize: 12, color: C.inkS, marginBottom: 5, fontWeight: 300, display: "block" }}>{label}</NL>
               ))}
             </div>
@@ -274,9 +264,9 @@ function LandingPage() {
     <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "110px 32px 70px", position: "relative", overflow: "hidden", background: C.bg }}>
       <Phulkari opacity={0.03} /><DvWatermark opacity={0.018} />
       <div style={{ maxWidth: 700, textAlign: "center", position: "relative", zIndex: 1 }}>
-        <Rv><p style={{ fontFamily: F.m, fontSize: 10, letterSpacing: 5, color: C.green, textTransform: "uppercase", marginBottom: 28 }}>ai-native · cloud · security · structure</p></Rv>
+        <Rv><p style={{ fontFamily: F.m, fontSize: 10, letterSpacing: 5, color: C.green, textTransform: "uppercase", marginBottom: 28 }}>fractional devops · cloud · ci/cd · kubernetes</p></Rv>
         <Rv delay={0.1}><h1 style={{ fontFamily: F.d, fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 400, color: C.ink, lineHeight: 1.14, marginBottom: 18 }}>We shape your infrastructure.<br /><em style={{ color: C.green }}>You reach your destination.</em></h1></Rv>
-        <Rv delay={0.2}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 450, margin: "0 auto 6px", fontWeight: 300 }}>Cloud · Security · Structure — upgraded, not just managed.</p><p style={{ fontFamily: F.b, fontSize: 14, color: C.inkM, lineHeight: 1.7, maxWidth: 470, margin: "0 auto 36px", fontWeight: 300 }}>An AI-native team applying product thinking to your entire infrastructure. We do not appear in your system. We shape it.</p></Rv>
+        <Rv delay={0.2}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 450, margin: "0 auto 6px", fontWeight: 300 }}>Fractional DevOps for startups — CI/CD pipelines, Kubernetes, and cloud infrastructure. Upgraded, not just managed.</p><p style={{ fontFamily: F.b, fontSize: 14, color: C.inkM, lineHeight: 1.7, maxWidth: 470, margin: "0 auto 36px", fontWeight: 300 }}>An AI-native DevOps outsourcing team applying product thinking to your cloud infrastructure consulting needs. From New Delhi, India — delivered globally.</p></Rv>
         <Rv delay={0.3}><div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <BtnProducts label="start_upgrade →" dvLabel="आरम्भ →" />
           <NL to="philosophy" style={{ fontFamily: F.m, padding: "12px 24px", background: "transparent", color: C.ink, fontSize: 12, borderRadius: 3, border: `1px solid ${C.bdr}`, letterSpacing: 0.5 }}>read_दर्शन</NL>
@@ -288,7 +278,7 @@ function LandingPage() {
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
         <Rv><SL text="दर्शन.config" /></Rv>
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: "clamp(24px, 3.2vw, 38px)", fontWeight: 400, color: C.ink, lineHeight: 1.2, marginBottom: 14, maxWidth: 520 }}>Infrastructure is not a task.<br />It is a <em style={{ color: C.green }}>product</em>.</h2></Rv>
-        <Rv delay={0.12}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 500, marginBottom: 36, fontWeight: 300 }}>The industry sells checklists and vendors. We deliver products — AI-accelerated, privacy-constrained, structured around the user.</p></Rv>
+        <Rv delay={0.12}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 500, marginBottom: 36, fontWeight: 300 }}>The industry sells checklists and vendors. We deliver fractional DevOps as a product — AI-accelerated CI/CD pipeline setup, Kubernetes managed services, and cloud infrastructure consulting, all structured around the user.</p></Rv>
         <Rv delay={0.2}><TerminalPhilosophy /></Rv>
       </div>
     </section>
@@ -607,17 +597,65 @@ function ProductsPage() {
 /* ═══════════════════════════════════════════════════════════
    ROUTER + APP
    ═══════════════════════════════════════════════════════════ */
+import ServicesOverviewPage from "./pages/ServicesPage";
+import CICDSetupPage from "./pages/CICDSetupPage";
+import KubernetesPage from "./pages/KubernetesPage";
+import CloudMigrationPage from "./pages/CloudMigrationPage";
+import InfraAuditPage from "./pages/InfraAuditPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import BlogPage from "./pages/BlogPage";
+
+const PAGE_SEO = {
+  '': {
+    title: 'CloudSaathi — Fractional DevOps for Startups | Ship Faster Without Hiring',
+    description: 'CloudSaathi provides fractional DevOps for startups — CI/CD pipeline setup, Kubernetes managed services, cloud migration, and infrastructure audits. Based in New Delhi, India. Globally delivered.',
+    path: '/',
+  },
+  'philosophy': {
+    title: 'Our Philosophy — CloudSaathi | Infrastructure as a Product',
+    description: 'CloudSaathi treats infrastructure as a product, not a task list. Built on truth, logic, and precision — our philosophy shapes every cloud deployment.',
+    path: '/philosophy',
+  },
+  'ai-native': {
+    title: 'AI-Native DevOps — CloudSaathi | Privacy-First AI Infrastructure',
+    description: 'AI woven into every step of your infrastructure — from discovery to deployment. Privacy-constrained by architecture, validated by engineers.',
+    path: '/ai-native',
+  },
+  'products': {
+    title: 'Products & Pricing — CloudSaathi | DevOps Services from ₹9,999',
+    description: 'Transparent pricing for fractional DevOps services. Infrastructure audits, cloud cost restructuring, modernisation, and security — all under ₹1L.',
+    path: '/products',
+  },
+};
+
 export default function CloudSaathiComplete() {
-  const [page, setPage] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const page = location.pathname === '/' ? '' : location.pathname.replace(/^\//, '');
 
   const go = useCallback((route) => {
-    setPage(route);
+    navigate(route ? `/${route}` : '/');
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, []);
+  }, [navigate]);
+
+  const seo = PAGE_SEO[page] || PAGE_SEO[''];
 
   return (
     <NavCtx.Provider value={{ page, go }}>
-      <link href={fontUrl} rel="stylesheet" />
+      <Helmet>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        <link rel="canonical" href={`https://cloudsaathi.com${seo.path}`} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:url" content={`https://cloudsaathi.com${seo.path}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="CloudSaathi" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seo.title} />
+        <meta name="twitter:description" content={seo.description} />
+      </Helmet>
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -628,10 +666,18 @@ export default function CloudSaathiComplete() {
         input[type="range"]::-webkit-slider-thumb { cursor: pointer; }
       `}</style>
       <Nav page={page} />
+      {!page && <LandingPage />}
       {page === "philosophy" && <PhilosophyPage />}
       {page === "ai-native" && <AINativePage />}
       {page === "products" && <ProductsPage />}
-      {!page && <LandingPage />}
+      {page === "services" && <ServicesOverviewPage />}
+      {page === "services/cicd-setup" && <CICDSetupPage />}
+      {page === "services/kubernetes-management" && <KubernetesPage />}
+      {page === "services/cloud-migration" && <CloudMigrationPage />}
+      {page === "services/infra-audit" && <InfraAuditPage />}
+      {page === "about" && <AboutPage />}
+      {page === "contact" && <ContactPage />}
+      {page === "blog" && <BlogPage />}
       <Footer />
     </NavCtx.Provider>
   );
