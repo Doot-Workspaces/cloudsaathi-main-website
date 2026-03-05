@@ -36,8 +36,7 @@ export default function AboutPage() {
             We shape infrastructure.<br /><em style={{ color: C.green }}>From New Delhi to the world.</em>
           </h1>
           <p style={{ fontFamily: F.b, fontSize: 16, color: C.inkS, lineHeight: 1.85, maxWidth: 560, fontWeight: 300 }}>
-            {/* TODO: REPLACE with final about copy */}
-            CloudSaathi is an AI-native fractional DevOps team based in New Delhi, India. We exist because startups
+            CloudSaathi (cloudsaathi.com) is the official brand — an AI-native fractional DevOps team based in New Delhi, India. We exist because startups
             deserve world-class cloud infrastructure consulting without the overhead of a full-time DevOps hire.
           </p>
         </div>

@@ -265,7 +265,8 @@ function LandingPage() {
       <Phulkari opacity={0.03} /><DvWatermark opacity={0.018} />
       <div style={{ maxWidth: 700, textAlign: "center", position: "relative", zIndex: 1 }}>
         <Rv><p style={{ fontFamily: F.m, fontSize: 10, letterSpacing: 5, color: C.green, textTransform: "uppercase", marginBottom: 28 }}>fractional devops · cloud · ci/cd · kubernetes</p></Rv>
-        <Rv delay={0.1}><h1 style={{ fontFamily: F.d, fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 400, color: C.ink, lineHeight: 1.14, marginBottom: 18 }}>We shape your infrastructure.<br /><em style={{ color: C.green }}>You reach your destination.</em></h1></Rv>
+        <Rv delay={0.1}><h1 style={{ fontFamily: F.d, fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 400, color: C.ink, lineHeight: 1.14, marginBottom: 8 }}>We shape your infrastructure.<br /><em style={{ color: C.green }}>You reach your destination.</em></h1></Rv>
+        <Rv delay={0.12}><p style={{ fontFamily: F.m, fontSize: 11, color: C.inkM, letterSpacing: 1, marginBottom: 18 }}>CloudSaathi — cloudsaathi.com</p></Rv>
         <Rv delay={0.2}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 450, margin: "0 auto 6px", fontWeight: 300 }}>Fractional DevOps for startups — CI/CD pipelines, Kubernetes, and cloud infrastructure. Upgraded, not just managed.</p><p style={{ fontFamily: F.b, fontSize: 14, color: C.inkM, lineHeight: 1.7, maxWidth: 470, margin: "0 auto 36px", fontWeight: 300 }}>An AI-native DevOps outsourcing team applying product thinking to your cloud infrastructure consulting needs. From New Delhi, India — delivered globally.</p></Rv>
         <Rv delay={0.3}><div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <BtnProducts label="start_upgrade →" dvLabel="आरम्भ →" />
@@ -608,8 +609,8 @@ import BlogPage from "./pages/BlogPage";
 
 const PAGE_SEO = {
   '': {
-    title: 'CloudSaathi — Fractional DevOps for Startups | Ship Faster Without Hiring',
-    description: 'CloudSaathi provides fractional DevOps for startups — CI/CD pipeline setup, Kubernetes managed services, cloud migration, and infrastructure audits. Based in New Delhi, India. Globally delivered.',
+    title: 'CloudSaathi — Fractional DevOps for Startups | cloudsaathi.com | Ship Faster Without Hiring',
+    description: 'CloudSaathi (cloudsaathi.com) — fractional DevOps for startups: CI/CD pipeline setup, Kubernetes managed services, cloud migration, infrastructure audits. New Delhi, India. Globally delivered.',
     path: '/',
   },
   'philosophy': {
