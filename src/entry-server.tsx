@@ -1,10 +1,10 @@
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, type HelmetServerState } from 'react-helmet-async';
 import App from './App';
 
 export function render(url: string) {
-  const helmetContext: { helmet?: { title: { toString(): string }; meta: { toString(): string }; link: { toString(): string }; script: { toString(): string } } } = {};
+  const helmetContext: { helmet?: HelmetServerState | null } = {};
 
   const html = renderToString(
     <HelmetProvider context={helmetContext}>
