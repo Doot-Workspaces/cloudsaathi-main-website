@@ -184,7 +184,7 @@ export default function Footer() {
               color: COLORS.textMuted,
             }}
           >
-            &copy; 2026 CloudSaathi
+            &copy; 2026 CloudSaathi &middot; Official site: <a href="https://cloudsaathi.com" style={{ color: 'inherit', textDecoration: 'none' }}>cloudsaathi.com</a>
           </span>
 
           <div
