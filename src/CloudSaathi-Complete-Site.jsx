@@ -190,6 +190,11 @@ function Footer() {
                 <NL key={route} to={route} style={{ fontFamily: F.b, fontSize: 12, color: C.inkS, marginBottom: 5, fontWeight: 300, display: "block" }}>{label}</NL>
               ))}
             </div>
+            {/* Products — sibling sites we ship */}
+            <div>
+              <p style={{ fontFamily: F.m, fontSize: 8, color: C.inkM, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Products</p>
+              <EL href="https://kotwal.cloudsaathi.com" style={{ display: "block", fontFamily: F.b, fontSize: 12, color: C.inkS, marginBottom: 5, fontWeight: 300 }}>Kotwal — security agent</EL>
+            </div>
             {/* Connect — external [CONNECT] */}
             <div>
               <p style={{ fontFamily: F.m, fontSize: 8, color: C.inkM, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Connect</p>
@@ -491,6 +496,26 @@ function ProductsPage() {
         <Rv delay={0.1}><p style={{ fontFamily: F.b, fontSize: 15, color: C.inkS, lineHeight: 1.8, maxWidth: 480, fontWeight: 300 }}>Simple. If we don't save you money, we don't earn more than our base fee. Our incentives are fully aligned with yours.</p></Rv>
       </div>
     </section>
+    {/* ═══ Products we ship — link to Kotwal ═══════════════════════ */}
+    <section style={{ padding: "10px 32px 40px", background: C.bg }}>
+      <div style={{ maxWidth: 700, margin: "0 auto" }}>
+        <Rv>
+          <a href="https://kotwal.cloudsaathi.com" target="_blank" rel="noopener noreferrer"
+            style={{ display: "block", padding: "20px 22px", background: C.bgW, border: `1px solid ${C.bdr}`, borderRadius: 6, textDecoration: "none", transition: "border-color 0.3s, transform 0.3s" }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#811622"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = C.bdr; e.currentTarget.style.transform = "translateY(0)"; }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+              <div style={{ flex: "1 1 280px" }}>
+                <p style={{ fontFamily: F.m, fontSize: 9, color: "#811622", letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Beyond services — we ship products</p>
+                <h3 style={{ fontFamily: F.d, fontSize: 22, fontWeight: 500, color: C.ink, margin: "0 0 4px" }}>Kotwal <span lang="hi" style={{ fontFamily: F.dv, fontSize: 18, color: "#811622", marginLeft: 6, fontWeight: 500 }}>कोतवाल</span></h3>
+                <p style={{ fontFamily: F.b, fontSize: 13, color: C.inkS, lineHeight: 1.6, fontWeight: 300, margin: 0 }}>AI security agent powered by Claude Code. Scans your repo, pen-tests your live deployment, writes the fix as a PR. <span style={{ color: C.ink, fontWeight: 500 }}>$99 one-time.</span></p>
+              </div>
+              <span style={{ fontFamily: F.m, fontSize: 11, color: "#811622", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap", fontWeight: 500 }}>kotwal.cloudsaathi.com →</span>
+            </div>
+          </a>
+        </Rv>
+      </div>
+    </section>
     <section style={{ padding: "40px 32px 60px", background: C.bgW }}>
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
         <Rv><SL text="what we do" /></Rv>
@@ -606,6 +631,7 @@ import InfraAuditPage from "./pages/InfraAuditPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import BlogPage from "./pages/BlogPage";
+import PrivacyPage from "./pages/PrivacyPage";
 
 const PAGE_SEO = {
   '': {
@@ -627,6 +653,11 @@ const PAGE_SEO = {
     title: 'Products & Pricing — CloudSaathi | DevOps Services from ₹9,999',
     description: 'Transparent pricing for fractional DevOps services. Infrastructure audits, cloud cost restructuring, modernisation, and security — all under ₹1L.',
     path: '/products',
+  },
+  'privacy': {
+    title: 'Privacy Policy — CloudSaathi',
+    description: 'CloudSaathi privacy policy. Learn how we collect, use, and protect your data. Privacy is our constraint — your data never trains external models.',
+    path: '/privacy',
   },
 };
 
@@ -679,6 +710,7 @@ export default function CloudSaathiComplete() {
       {page === "about" && <AboutPage />}
       {page === "contact" && <ContactPage />}
       {page === "blog" && <BlogPage />}
+      {page === "privacy" && <PrivacyPage />}
       <Footer />
     </NavCtx.Provider>
   );
