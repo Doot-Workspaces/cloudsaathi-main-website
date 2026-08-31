@@ -124,3 +124,6 @@ Built with ❤️ for social impact organizations
 
 
 
+
+
+<!-- Security scan triggered at 2026-08-31 16:59:28 -->
