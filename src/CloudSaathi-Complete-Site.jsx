@@ -277,7 +277,7 @@ function LandingPage() {
           <BtnProducts label="start_upgrade →" dvLabel="आरम्भ →" />
           <NL to="philosophy" style={{ fontFamily: F.m, padding: "12px 24px", background: "transparent", color: C.ink, fontSize: 12, borderRadius: 3, border: `1px solid ${C.bdr}`, letterSpacing: 0.5 }}>read_दर्शन</NL>
         </div></Rv>
-        <Rv delay={0.45}><div style={{ display: "flex", justifyContent: "center", gap: 52, marginTop: 64 }}>{[{ dv: "सूक्ष्मता", en: "Precision" }, { dv: "स्पष्टता", en: "Clarity" }, { dv: "विस्तार", en: "Scale" }].map(i => <Pill key={i.en} {...i} />)}</div></Rv>
+        <Rv delay={0.45}><div className="rg-pills" style={{ display: "flex", justifyContent: "center", gap: 52, marginTop: 64 }}>{[{ dv: "सूक्ष्मता", en: "Precision" }, { dv: "स्पष्टता", en: "Clarity" }, { dv: "विस्तार", en: "Scale" }].map(i => <Pill key={i.en} {...i} />)}</div></Rv>
       </div>
     </section>
     <section style={{ padding: "80px 32px", background: C.bgW }}>
@@ -293,7 +293,7 @@ function LandingPage() {
       <div style={{ maxWidth: 820, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <Rv><SL text="the_upgrade" /></Rv>
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 400, color: C.ink, marginBottom: 40 }}>From cluttered to <em style={{ color: C.green }}>composed</em>.</h2></Rv>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
           {[{ lb: "before", cl: C.inkM, bg: C.bgW, bd: C.bdr, ic: "—", items: ["Cloud spend without visibility into purpose", "Policies scattered across departments", "Incidents without root cause visibility", "Security treated as auxiliary", "AI adopted without privacy governance"] },
             { lb: "after", cl: C.green, bg: C.greenL, bd: C.green + "44", ic: "✓", items: ["Every resource mapped to function and cost", "One structured source of truth", "AI-accelerated incident response with SOPs", "Security built on logic — compliance follows", "AI-native workflows with zero data exposure"] }].map((col, ci) => (
             <Rv key={ci} delay={0.12 + ci * 0.08}><div style={{ padding: 24, borderRadius: 6, background: col.bg, border: `1px solid ${col.bd}` }}>
@@ -307,7 +307,7 @@ function LandingPage() {
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
         <Rv><SL text="मार्ग — approach" /></Rv>
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 400, color: C.ink, marginBottom: 40 }}>Four movements. <em style={{ color: C.green }}>One transformation.</em></h2></Rv>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           {[{ n: "१", t: "Listen", d: "Your business reality first. AI maps your landscape — humans make decisions." },
             { n: "२", t: "Map", d: "AI-accelerated audit. Every resource mapped to purpose." },
             { n: "३", t: "Structure", d: "Infrastructure designed as a product. AI generates documentation that speaks to users." },
@@ -365,7 +365,7 @@ function PhilosophyPage() {
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
         <Rv><SL text="structural advantage" /></Rv>
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 32 }}>Three disciplines. <em style={{ color: C.green }}>One intersection.</em></h2></Rv>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+        <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
           {[{ l: "DevSecOps", dv: "कार्य", d: "Cloud architecture, security hardening, CI/CD, IaC, monitoring." },
             { l: "Product Thinking", dv: "दृष्टि", d: "Every component has a user. Documentation written to be understood." },
             { l: "AI-Native", dv: "बुद्धि", d: "AI woven into every step. Constrained by privacy. Validated by engineers." }].map((item, i) => (
@@ -465,7 +465,7 @@ function AINativePage() {
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 36 }}>Everyone has AI. <em style={{ color: C.green }}>Few get results from it.</em></h2></Rv>
         {aiProblems.map((p, i) => (
           <Rv key={i} delay={0.04 + i * 0.03}>
-            <div style={{ display: "grid", gridTemplateColumns: "32px 1fr 1fr", gap: 20, padding: "20px 0", borderTop: `1px solid ${C.bdr}` }}>
+            <div className="rg-problems" style={{ display: "grid", gridTemplateColumns: "32px 1fr 1fr", gap: 20, padding: "20px 0", borderTop: `1px solid ${C.bdr}` }}>
               <span style={{ fontFamily: F.m, fontSize: 11, color: C.green, marginTop: 2 }}>{p.n}</span>
               <p style={{ fontFamily: F.d, fontSize: 15, fontStyle: "italic", color: C.inkS, lineHeight: 1.6, fontWeight: 400 }}>{p.q}</p>
               <div><p style={{ fontFamily: F.m, fontSize: 9, color: C.teal, letterSpacing: 2, marginBottom: 6, textTransform: "uppercase" }}>{p.lb}</p><p style={{ fontFamily: F.b, fontSize: 13, color: C.inkS, lineHeight: 1.7, fontWeight: 300 }}>{p.s}</p></div>
@@ -482,7 +482,7 @@ function AINativePage() {
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 36 }}>Five ways we put <em style={{ color: C.green }}>AI to work.</em></h2></Rv>
         {aiOfferings.map((o, i) => (
           <Rv key={i} delay={0.04 + i * 0.03}>
-            <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr", gap: 24, padding: "24px 0", borderTop: `1px solid ${C.bdr}` }}>
+            <div className="rg" style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr", gap: 24, padding: "24px 0", borderTop: `1px solid ${C.bdr}` }}>
               <div>
                 <span style={{ fontFamily: F.m, fontSize: 10, color: C.green, letterSpacing: 1 }}>{o.n}</span>
                 <h3 style={{ fontFamily: F.d, fontSize: 20, fontWeight: 400, color: C.ink, margin: "4px 0 4px" }}>{o.title}</h3>
@@ -511,7 +511,7 @@ function AINativePage() {
               <div style={{ display: "flex", justifyContent: "center" }}><div style={{ width: 52, height: 52, borderRadius: "50%", background: C.greenL, border: `2px solid ${C.green}44`, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ fontFamily: F.m, fontSize: 9, color: C.green, fontWeight: 500 }}>{s.n}</span></div></div>
               <div style={{ padding: 24, background: C.bg, borderRadius: 6, border: `1px solid ${C.bdr}` }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}><span style={{ fontFamily: F.m, fontSize: 10, color: C.teal, letterSpacing: 2, fontWeight: 500 }}>{s.lb}</span><span style={{ fontFamily: F.d, fontSize: 18, fontWeight: 400, color: C.ink }}>{s.t}</span></div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 12 }}>
+                <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 12 }}>
                   <div style={{ padding: "10px 12px", background: C.bgW, borderRadius: 4, borderLeft: `3px solid ${C.warm}` }}><p style={{ fontFamily: F.m, fontSize: 8, color: C.warm, letterSpacing: 2, marginBottom: 4, textTransform: "uppercase" }}>human</p><p style={{ fontFamily: F.b, fontSize: 12, color: C.inkS, lineHeight: 1.6, fontWeight: 300 }}>{s.h}</p></div>
                   <div style={{ padding: "10px 12px", background: C.bgW, borderRadius: 4, borderLeft: `3px solid ${C.teal}` }}><p style={{ fontFamily: F.m, fontSize: 8, color: C.teal, letterSpacing: 2, marginBottom: 4, textTransform: "uppercase" }}>ai</p><p style={{ fontFamily: F.b, fontSize: 12, color: C.inkS, lineHeight: 1.6, fontWeight: 300 }}>{s.a}</p></div>
                 </div>
@@ -527,7 +527,7 @@ function AINativePage() {
       <div style={{ maxWidth: 820, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <Rv><SL text="गोपनीयता — privacy" /></Rv>
         <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 32 }}>Privacy is not a policy. <em style={{ color: C.green }}>It is an architecture.</em></h2></Rv>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+        <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           {[{ t: "Zero data exposure", d: "Your data never trains external models. Every AI operation runs within pre-defined boundaries." },
             { t: "Auditable AI workflows", d: "Every AI output is traceable — what went in, what came out, what humans changed." },
             { t: "Human gates everywhere", d: "AI generates. Humans validate. No automated action touches production without review." },
@@ -628,7 +628,7 @@ function ProductsPage() {
         <Rv delay={0.05}><h2 style={{ fontFamily: F.d, fontSize: 24, fontWeight: 400, color: C.ink, marginBottom: 10 }}>Three numbers. <em style={{ color: C.green }}>That's it.</em></h2></Rv>
         <Rv delay={0.08}><p style={{ fontFamily: F.b, fontSize: 14, color: C.inkS, lineHeight: 1.8, maxWidth: 460, fontWeight: 300, marginBottom: 28 }}>No hourly billing. No complicated formulas. We earn when you save.</p></Rv>
         <Rv delay={0.12}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+          <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
             {/* [PRICE] — EDIT THESE DISPLAY VALUES */}
             {[{ num: "₹15,000", lb: "/month base", d: "Our commitment. Monitoring, support, reviews. Less than a DevOps intern." },
               { num: "₹50,000", lb: "/month free savings", d: "First ₹50K in monthly cloud savings is 100% yours. We earn nothing on it." },
@@ -656,7 +656,7 @@ function ProductsPage() {
             <p style={{ fontFamily: F.b, fontSize: 32, fontWeight: 600, color: "#fff", marginTop: 6 }}>{inr(spend)}<span style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", fontWeight: 300 }}>/month</span></p>
             <p style={{ fontFamily: F.m, fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>assuming 35% savings</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div style={{ padding: 16, background: "rgba(255,255,255,0.04)", borderRadius: 4 }}>
               <p style={{ fontFamily: F.m, fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: 1, marginBottom: 4 }}>YOU SAVE MONTHLY</p>
               <p style={{ fontFamily: F.b, fontSize: 24, fontWeight: 600, color: "#7DCEA0", margin: 0 }}>{inr(youKeep)}</p>
@@ -682,7 +682,7 @@ function ProductsPage() {
     <section style={{ padding: "40px 32px 60px", background: C.bgW }}>
       <div style={{ maxWidth: 700, margin: "0 auto" }}>
         <Rv><h2 style={{ fontFamily: F.d, fontSize: 22, fontWeight: 400, color: C.ink, marginBottom: 24 }}>No fine print. <em style={{ color: C.green }}>Just clarity.</em></h2></Rv>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div className="rg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           {[{ q: "How do you verify savings?", a: "Against your actual cloud bills. Before vs after, month over month." },
             { q: "What if savings are less than ₹50K?", a: "You pay only the ₹15K base. We earn nothing extra." },
             { q: "Can I pause or stop?", a: "30 days notice. No lock-in. No exit fees." },

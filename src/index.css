@@ -306,3 +306,37 @@ input[type="range"]::-moz-range-thumb {
     display: none !important;
   }
 }
+
+/* ========================================
+   Responsive Grid Utilities
+   ======================================== */
+@media (max-width: 768px) {
+  /* Collapse any multi-column grid to single column */
+  .rg {
+    grid-template-columns: 1fr !important;
+  }
+  /* AI problems: number + quote on row 1, solution spans full width on row 2 */
+  .rg-problems {
+    grid-template-columns: 28px 1fr !important;
+    gap: 12px !important;
+  }
+  .rg-problems > :last-child {
+    grid-column: 1 / -1 !important;
+    padding-left: 0 !important;
+  }
+  /* Flex rows: wrap and reduce gap on mobile */
+  .rg-pills {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+  /* Reduce hero top padding on mobile */
+  .rg-hero {
+    padding-top: 90px !important;
+    min-height: auto !important;
+  }
+  /* Prevent horizontal scroll */
+  section {
+    overflow-x: hidden;
+  }
+}
