@@ -136,9 +136,11 @@ function Nav({ page }) {
   const [sc, setSc] = useState(false);
   const [logoH, setLogoH] = useState(false);
   const [beginH, setBeginH] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => { const h = () => setSc(window.scrollY > 50); window.addEventListener("scroll", h); return () => window.removeEventListener("scroll", h); }, []);
+  const navLinks = [["Philosophy", "दर्शन", "philosophy"], ["AI-Native", "बुद्धि", "ai-native"], ["Products", "उत्पाद", "products"], ["Services", "सेवाएं", "services"]];
   return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: sc ? "rgba(245,241,232,0.88)" : "transparent", backdropFilter: sc ? "blur(20px)" : "none", borderBottom: sc ? `1px solid ${C.bdr}` : "1px solid transparent", transition: "all 0.5s", padding: "0 32px" }}>
+    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: sc || mobileOpen ? "rgba(245,241,232,0.96)" : "transparent", backdropFilter: sc || mobileOpen ? "blur(20px)" : "none", borderBottom: sc || mobileOpen ? `1px solid ${C.bdr}` : "1px solid transparent", transition: "all 0.5s", padding: "0 32px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", height: 58, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {/* Logo → Landing */}
         <NL to="" onMouseEnter={() => setLogoH(true)} onMouseLeave={() => setLogoH(false)}>
@@ -147,7 +149,8 @@ function Nav({ page }) {
             <span style={{ fontFamily: F.d, fontSize: 18, color: C.ink, fontWeight: 500 }}>cloud<span style={{ position: "relative", display: "inline-block" }}><span style={{ opacity: logoH ? 0 : 1, transition: "opacity 0.4s" }}>saathi</span><span style={{ position: "absolute", left: 0, top: 0, opacity: logoH ? 1 : 0, transition: "opacity 0.4s", fontFamily: F.dv, fontSize: 17, fontWeight: 500, color: C.green }}>साथी</span></span></span>
           </div>
         </NL>
-        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+        {/* Desktop nav links */}
+        <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 22 }}>
           <NavLink en="Philosophy" dv="दर्शन" route="philosophy" active={page === "philosophy"} />
           <NavLink en="AI-Native" dv="बुद्धि" route="ai-native" active={page === "ai-native"} />
           <NavLink en="Products" dv="उत्पाद" route="products" active={page === "products"} />
@@ -159,6 +162,26 @@ function Nav({ page }) {
             <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: beginH ? 1 : 0, transition: "opacity 0.35s", fontFamily: F.dv, fontSize: 12, fontWeight: 500 }}>आरम्भ_</span>
           </NL>
         </div>
+        {/* Mobile hamburger */}
+        <button className="nav-mobile" onClick={() => setMobileOpen(o => !o)}
+          style={{ display: "none", background: "none", border: "none", cursor: "pointer", padding: "4px 0", flexDirection: "column", gap: 5, alignItems: "flex-end" }}>
+          <span style={{ display: "block", width: mobileOpen ? 22 : 22, height: 1.5, background: C.ink, transition: "all 0.3s", transform: mobileOpen ? "rotate(45deg) translate(4px, 4px)" : "none" }} />
+          <span style={{ display: "block", width: mobileOpen ? 0 : 16, height: 1.5, background: C.ink, transition: "all 0.3s", opacity: mobileOpen ? 0 : 1 }} />
+          <span style={{ display: "block", width: 22, height: 1.5, background: C.ink, transition: "all 0.3s", transform: mobileOpen ? "rotate(-45deg) translate(4px, -4px)" : "none" }} />
+        </button>
+      </div>
+      {/* Mobile dropdown menu */}
+      <div className="nav-mobile-menu" style={{ display: "none", padding: "12px 0 20px", borderTop: `1px solid ${C.bdr}` }}>
+        {navLinks.map(([en, dv, route]) => (
+          <NL key={route} to={route} onClick={() => setMobileOpen(false)}
+            style={{ display: "block", fontFamily: F.b, fontSize: 15, color: page === route || (route === "services" && page.startsWith("services")) ? C.green : C.ink, padding: "11px 0", borderBottom: `1px solid ${C.bdr}44`, fontWeight: 300 }}>
+            {en}
+          </NL>
+        ))}
+        <NL to="products" onClick={() => setMobileOpen(false)}
+          style={{ display: "inline-block", marginTop: 16, fontFamily: F.m, fontSize: 11, fontWeight: 500, color: C.bgW, background: C.green, padding: "9px 20px", borderRadius: 3, letterSpacing: 0.5 }}>
+          begin_
+        </NL>
       </div>
     </nav>
   );
@@ -182,7 +205,7 @@ function Footer() {
             <p style={{ fontFamily: F.b, fontSize: 11, color: C.inkM, maxWidth: 240, lineHeight: 1.6, fontWeight: 300 }}>AI-native infrastructure shaped with product thinking. New Delhi, India. Global clients.</p>
             <p style={{ fontFamily: F.dv, fontSize: 11, color: C.warm, marginTop: 6, opacity: 0.5 }}>सूक्ष्मता · स्पष्टता · विस्तार</p>
           </div>
-          <div style={{ display: "flex", gap: 36 }}>
+          <div style={{ display: "flex", gap: 36, flexWrap: "wrap" }}>
             {/* Pages — internal nav */}
             <div>
               <p style={{ fontFamily: F.m, fontSize: 8, color: C.inkM, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Pages</p>
