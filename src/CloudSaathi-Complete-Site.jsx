@@ -171,7 +171,7 @@ function Nav({ page }) {
         </button>
       </div>
       {/* Mobile dropdown menu */}
-      <div className="nav-mobile-menu" style={{ display: "none", padding: "12px 0 20px", borderTop: `1px solid ${C.bdr}` }}>
+      <div className={`nav-mobile-menu${mobileOpen ? " open" : ""}`} style={{ padding: "12px 0 20px", borderTop: `1px solid ${C.bdr}` }}>
         {navLinks.map(([en, dv, route]) => (
           <NL key={route} to={route} onClick={() => setMobileOpen(false)}
             style={{ display: "block", fontFamily: F.b, fontSize: 15, color: page === route || (route === "services" && page.startsWith("services")) ? C.green : C.ink, padding: "11px 0", borderBottom: `1px solid ${C.bdr}44`, fontWeight: 300 }}>

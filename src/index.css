@@ -289,6 +289,9 @@ input[type="range"]::-moz-range-thumb {
     display: flex !important;
   }
   .nav-mobile-menu {
+    display: none;
+  }
+  .nav-mobile-menu.open {
     display: block !important;
   }
   /* Reduce section horizontal padding on mobile */
