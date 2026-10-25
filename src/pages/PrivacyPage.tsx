@@ -120,7 +120,7 @@ export default function PrivacyPage() {
           </ul>
           <p style={S.p}>
             To exercise any of these rights, contact us at{' '}
-            <a href="mailto:connect@cloudsaathi.com" style={{ color: C.green, textDecoration: "none" }}>connect@cloudsaathi.com</a>.
+            <a href="mailto:contact@cloudsaathi.com" style={{ color: C.green, textDecoration: "none" }}>contact@cloudsaathi.com</a>.
           </p>
 
           <h2 style={S.h2}>8. Security</h2>
@@ -149,7 +149,7 @@ export default function PrivacyPage() {
           <p style={{ ...S.p, fontFamily: F.m, fontSize: 13 }}>
             CloudSaathi<br />
             New Delhi, India<br />
-            <a href="mailto:connect@cloudsaathi.com" style={{ color: C.green, textDecoration: "none" }}>connect@cloudsaathi.com</a>
+            <a href="mailto:contact@cloudsaathi.com" style={{ color: C.green, textDecoration: "none" }}>contact@cloudsaathi.com</a>
           </p>
 
           <div style={{ marginTop: 48, paddingTop: 24, borderTop: `1px solid ${C.bdr}` }}>

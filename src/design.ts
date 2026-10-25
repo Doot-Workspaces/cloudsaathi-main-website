@@ -22,5 +22,5 @@ export const F = {
 } as const;
 
 export const SITE_URL = "https://cloudsaathi.com";
-export const CALENDLY_URL = "https://calendly.com/connect-cloudsaathi/30min";
-export const EMAIL_ADDRESS = "connect@cloudsaathi.com";
+export const CALENDLY_URL = "https://calendly.com/cloudsaathi/30min";
+export const EMAIL_ADDRESS = "contact@cloudsaathi.com";

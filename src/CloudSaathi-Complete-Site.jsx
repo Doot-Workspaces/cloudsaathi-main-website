@@ -18,11 +18,11 @@ import { C, F } from "./design";
 const inr = (n) => "₹" + n.toLocaleString("en-IN");
 
 /* [CALENDLY] — REPLACE THIS WITH YOUR ACTUAL CALENDLY LINK */
-const CALENDLY_URL = "https://calendly.com/connect-cloudsaathi/30min";
+const CALENDLY_URL = "https://calendly.com/cloudsaathi/30min";
 
 /* [CONNECT] — REPLACE THESE WITH YOUR ACTUAL LINKS */
 const LINKS = {
-  email: "mailto:connect@cloudsaathi.com",
+  email: "mailto:contact@cloudsaathi.com",
   linkedin: "https://linkedin.com/company/cloudsaathi",
   github: "https://github.com/cloudsaathi",
 };
@@ -401,15 +401,105 @@ function AINativePage() {
     { n: "04", lb: "BUILD", t: "Infrastructure as Code", h: "Architecture decisions. Tech selection. Validation.", a: "Generate Terraform/Pulumi configs. CI/CD scaffolding.", out: "Reproducible infrastructure", tm: "3x faster" },
     { n: "05", lb: "OPTIMIZE", t: "Continuous Improvement", h: "Monthly review. Strategic decisions.", a: "Cost anomaly detection. Right-sizing. Security monitoring.", out: "Always improving infrastructure", tm: "Always-on" },
   ];
+  const aiOfferings = [
+    {
+      n: "01", title: "MCP & Plugins", sub: "Your data, one question away.",
+      items: [
+        { t: "Application connectors", d: "MCP servers that let Claude, Gemini or Teams query your application directly. Read-only, role-scoped, audit-logged." },
+        { t: "Microsoft 365 connectors", d: "Outlook and Teams wired into your AI tools for summaries, drafts and follow-ups. Inbox and channel context on demand." },
+      ]
+    },
+    {
+      n: "02", title: "AI-SDLC", sub: "Build fast. Ship safe.",
+      items: [
+        { t: "Guardrailed delivery", d: "Charter, tech spec, coding rules and review gates built into the repo from day one. Documented, tested, secure by default." },
+        { t: "Framework adoption", d: "We set up the same AI-SDLC for your own engineering team and coach them on it. Templates, rules and team training." },
+      ]
+    },
+    {
+      n: "03", title: "AI for DevOps", sub: "Always watching. Always shipping.",
+      items: [
+        { t: "Continuous monitoring", d: "Health, latency and error trends watched daily, with AI-written incident summaries. Weekly report per application." },
+        { t: "Automated deployments", d: "Merge-to-deploy with regression runs, blue-green releases and rehearsed rollback. Every release repeatable." },
+      ]
+    },
+    {
+      n: "04", title: "AI-Assisted Security", sub: "Assessments that keep up with releases.",
+      items: [
+        { t: "SAST · DAST", d: "Static and dynamic scans on every build, with AI triage that cuts the noise. Findings ranked by real risk." },
+        { t: "VAPT · Pen testing", d: "Knowledge-base-backed vulnerability assessment and a manual red-team round. Signed report, fixes verified." },
+      ]
+    },
+    {
+      n: "05", title: "AI Enablement", sub: "For technical and non-technical teams.",
+      items: [
+        { t: "Use-case discovery", d: "We find the five tasks per team where AI saves the most time, then build for those first. Prioritised AI roadmap." },
+        { t: "Capacity building", d: "Hands-on workshops, prompt libraries and playbooks your team keeps using. Adoption you can measure." },
+      ]
+    },
+  ];
+  const aiProblems = [
+    { n: "01", q: '"Our data sits in five applications and nobody can just ask it a question."', lb: "CONNECT", s: "MCP connectors let your team query applications in plain language from Teams, Claude or Gemini. Read-only, role-based, logged." },
+    { n: "02", q: '"We bought AI licences. Six months later, nobody uses them."', lb: "ENABLE", s: "Use-case workshops for technical and non-technical teams, with prompts, plugins and playbooks wired to the work they already do." },
+    { n: "03", q: '"AI writes code fast. Who checks that it is secure?"', lb: "BUILD", s: "AI-SDLC: every pull request reviewed by AI against your standards, scanned, and blocked on any Critical or High finding." },
+    { n: "04", q: '"We run a security test once a year, right before the audit."', lb: "PROTECT", s: "Daily scans of live applications for secrets, dependencies and new CVEs, with a weekly report per application." },
+  ];
   return (<>
     <section style={{ minHeight: "55vh", display: "flex", alignItems: "center", padding: "110px 32px 50px", background: C.bg, position: "relative", overflow: "hidden" }}>
       <DvWatermark opacity={0.015} />
       <div style={{ maxWidth: 820, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        <Rv><p style={{ fontFamily: F.dv, fontSize: 26, color: C.warm, opacity: 0.4, marginBottom: 6 }}>बुद्धि</p><h1 style={{ fontFamily: F.d, fontSize: "clamp(32px, 4.5vw, 52px)", fontWeight: 400, color: C.ink, lineHeight: 1.12, marginBottom: 18 }}>AI is our method.<br /><em style={{ color: C.green }}>Privacy is our constraint.</em></h1></Rv>
-        <Rv delay={0.12}><p style={{ fontFamily: F.b, fontSize: 16, color: C.inkS, lineHeight: 1.85, maxWidth: 540, fontWeight: 300 }}>Every vendor will say "AI-powered" by next quarter. The difference is whether AI is a feature bolted on — or a method woven into every step. We are the latter.</p></Rv>
-        <Rv delay={0.2}><div style={{ marginTop: 24, padding: "12px 18px", background: C.bgDark, borderRadius: 4, display: "inline-block" }}><code style={{ fontFamily: F.m, fontSize: 13, color: C.teal }}>const tool = ai.withConstraint(privacy);</code></div></Rv>
+        <Rv><p style={{ fontFamily: F.m, fontSize: 10, color: C.green, letterSpacing: 3, textTransform: "uppercase", marginBottom: 12 }}>MCP · AI-SDLC · AI for DevOps</p><h1 style={{ fontFamily: F.d, fontSize: "clamp(32px, 4.5vw, 52px)", fontWeight: 400, color: C.ink, lineHeight: 1.12, marginBottom: 18 }}>AI that works<br /><em style={{ color: C.green }}>inside your organisation.</em></h1></Rv>
+        <Rv delay={0.12}><p style={{ fontFamily: F.b, fontSize: 16, color: C.inkS, lineHeight: 1.85, maxWidth: 580, fontWeight: 300 }}>We connect AI to your applications and data, build software with it under strict quality and security gates, and use it to run and protect what is already live.</p></Rv>
+        <Rv delay={0.18}><div style={{ marginTop: 20, display: "flex", gap: 16, flexWrap: "wrap" }}>
+          {["01  Talk to your applications through MCP", "02  Build with AI, ship with guardrails", "03  Monitor, scan and test continuously"].map((t, i) => (
+            <span key={i} style={{ fontFamily: F.m, fontSize: 11, color: C.inkM, borderBottom: `1px solid ${C.bdr}`, paddingBottom: 3 }}>{t}</span>
+          ))}
+        </div></Rv>
       </div>
     </section>
+
+    {/* Problems we solve */}
+    <section style={{ padding: "50px 32px 60px", background: C.bgW }}>
+      <div style={{ maxWidth: 820, margin: "0 auto" }}>
+        <Rv><SL text="problems we solve" /></Rv>
+        <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 36 }}>Everyone has AI. <em style={{ color: C.green }}>Few get results from it.</em></h2></Rv>
+        {aiProblems.map((p, i) => (
+          <Rv key={i} delay={0.04 + i * 0.03}>
+            <div style={{ display: "grid", gridTemplateColumns: "32px 1fr 1fr", gap: 20, padding: "20px 0", borderTop: `1px solid ${C.bdr}` }}>
+              <span style={{ fontFamily: F.m, fontSize: 11, color: C.green, marginTop: 2 }}>{p.n}</span>
+              <p style={{ fontFamily: F.d, fontSize: 15, fontStyle: "italic", color: C.inkS, lineHeight: 1.6, fontWeight: 400 }}>{p.q}</p>
+              <div><p style={{ fontFamily: F.m, fontSize: 9, color: C.teal, letterSpacing: 2, marginBottom: 6, textTransform: "uppercase" }}>{p.lb}</p><p style={{ fontFamily: F.b, fontSize: 13, color: C.inkS, lineHeight: 1.7, fontWeight: 300 }}>{p.s}</p></div>
+            </div>
+          </Rv>
+        ))}
+      </div>
+    </section>
+
+    {/* Five offerings */}
+    <section style={{ padding: "50px 32px 70px", background: C.bg }}>
+      <div style={{ maxWidth: 820, margin: "0 auto" }}>
+        <Rv><SL text="what we offer" /></Rv>
+        <Rv delay={0.08}><h2 style={{ fontFamily: F.d, fontSize: 28, fontWeight: 400, color: C.ink, marginBottom: 36 }}>Five ways we put <em style={{ color: C.green }}>AI to work.</em></h2></Rv>
+        {aiOfferings.map((o, i) => (
+          <Rv key={i} delay={0.04 + i * 0.03}>
+            <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr", gap: 24, padding: "24px 0", borderTop: `1px solid ${C.bdr}` }}>
+              <div>
+                <span style={{ fontFamily: F.m, fontSize: 10, color: C.green, letterSpacing: 1 }}>{o.n}</span>
+                <h3 style={{ fontFamily: F.d, fontSize: 20, fontWeight: 400, color: C.ink, margin: "4px 0 4px" }}>{o.title}</h3>
+                <p style={{ fontFamily: F.b, fontSize: 11, color: C.inkM, fontWeight: 300 }}>{o.sub}</p>
+              </div>
+              {o.items.map((it, j) => (
+                <div key={j}>
+                  <p style={{ fontFamily: F.b, fontSize: 13, fontWeight: 600, color: C.ink, marginBottom: 6 }}>{it.t}</p>
+                  <p style={{ fontFamily: F.b, fontSize: 12.5, color: C.inkS, lineHeight: 1.7, fontWeight: 300 }}>{it.d}</p>
+                </div>
+              ))}
+            </div>
+          </Rv>
+        ))}
+      </div>
+    </section>
+
     <section style={{ padding: "50px 32px 80px", background: C.bgW }}>
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
         <Rv><SL text="the pipeline" /></Rv>

@@ -20,5 +20,5 @@ export const COLORS = {
   purpleDim: 'rgba(167,139,250,0.08)',
 } as const
 
-export const CALENDLY_URL = 'https://calendly.com/connect-cloudsaathi/30min'
-export const EMAIL = 'connect@cloudsaathi.com'
+export const CALENDLY_URL = 'https://calendly.com/cloudsaathi/30min'
+export const EMAIL = 'contact@cloudsaathi.com'

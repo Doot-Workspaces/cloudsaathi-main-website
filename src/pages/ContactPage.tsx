@@ -7,7 +7,7 @@ const SCHEMA = {
   "mainEntity": {
     "@type": "ProfessionalService",
     "name": "CloudSaathi",
-    "email": "connect@cloudsaathi.com",
+    "email": "contact@cloudsaathi.com",
     "url": "https://cloudsaathi.com",
     "address": {
       "@type": "PostalAddress",
@@ -23,7 +23,7 @@ export default function ContactPage() {
     <>
       <SEOHead
         title="Contact CloudSaathi — Book a Free DevOps Consultation"
-        description="Get in touch with CloudSaathi for fractional DevOps services. Book a free 30-minute consultation. Email: connect@cloudsaathi.com. Based in New Delhi, India."
+        description="Get in touch with CloudSaathi for fractional DevOps services. Book a free 30-minute consultation. Email: contact@cloudsaathi.com. Based in New Delhi, India."
         path="/contact"
         schema={SCHEMA}
       />

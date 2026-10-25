@@ -11,7 +11,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does the hour-pack pricing work?',
     answer:
-      'You buy a pack of DevOps hours each month. Starter is 5 hrs at $149/mo ($29/hr), Growth is 15 hrs at $399/mo ($26/hr), and Scale is 40 hrs at $899/mo ($22/hr). Extra hours are billed at your pack rate. Unused hours roll over for 1 month. No cloud-spend percentages, no hidden fees.',
+      'You buy a pack of DevOps hours each month. Starter is 5 hrs at $149/mo ($29.80/hr), Professional is 15 hrs at $399/mo ($26.60/hr), and Scale is 40 hrs at $899/mo ($22.48/hr). Extra hours are billed at your pack rate. No cloud-spend percentages, no hidden fees.',
   },
   {
     question: 'Can I switch packs or cancel?',
@@ -21,7 +21,7 @@ const FAQ_ITEMS = [
   {
     question: 'What if I need more hours than my pack?',
     answer:
-      'Extra hours are billed at your pack rate - $29/hr for Starter, $26/hr for Growth, $22/hr for Scale. No surprise markups. We will always notify you before exceeding your pack so you stay in control.',
+      'Extra hours are billed at your pack rate - $29.80/hr for Starter, $26.60/hr for Professional, $22.48/hr for Scale. No surprise markups. We will always notify you before exceeding your pack so you stay in control.',
   },
   {
     question: 'Is there a minimum commitment?',
